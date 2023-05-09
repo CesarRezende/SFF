@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Flunt" Version="2.0.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <ProjectReference Include="..\..\2.Infra\Infra.Core\SFF.Infra.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\2.Infra\Infra.Core\SFF.Infra.Core.csproj" />
+    <Folder Include="Enums\" />
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

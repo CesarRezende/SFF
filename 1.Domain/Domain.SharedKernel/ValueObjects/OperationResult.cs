@@ -1,5 +1,4 @@
 using Flunt.Notifications;
-using SFF.Domain.SharedKernel;
 
 namespace SFF.SharedKernel
 {
@@ -43,7 +42,7 @@ namespace SFF.SharedKernel
 
 }
 
-public abstract class OperationResultBase<OP> : ValueObject
+public abstract class OperationResultBase<OP> : Notifiable<Notification>
     where OP : OperationResultBase<OP>
 {
     private bool _notFound { get; set; }

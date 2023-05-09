@@ -7,7 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\1.Domain\Domain.Administration\SFF.Domain.Administration.csproj" />
+    <ProjectReference Include="..\..\1.Domain\Domain.Financial\SFF.Domain.Financial.csproj" />
     <ProjectReference Include="..\Infra.Core\SFF.Infra.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities\Financial\" />
+    <Folder Include="EntityConfiguration\Financial\" />
+    <Folder Include="MapExtension\Financial\" />
+    <Folder Include="Scripts\" />
+    <Folder Include="Repositories\Financial\" />
   </ItemGroup>
 
 </Project>

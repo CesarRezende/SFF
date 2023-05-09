@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Domain.SharedKernel\SFF.Domain.SharedKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Core\ValueObjects\" />
+  </ItemGroup>
+
 </Project>

@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFF.Applications.API.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFF.Domain.SharedKernel.Tests", "4.Tests\Domain.SharedKernel.Tests\SFF.Domain.SharedKernel.Tests.csproj", "{829C2204-1501-4388-BA4D-58708F4169F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFF.Infra.Web", "2.Infra\Infra.Web\SFF.Infra.Web.csproj", "{BE88BE47-8800-4943-AE31-DB182DF05A10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,10 @@ Global
 		{829C2204-1501-4388-BA4D-58708F4169F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{829C2204-1501-4388-BA4D-58708F4169F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{829C2204-1501-4388-BA4D-58708F4169F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE88BE47-8800-4943-AE31-DB182DF05A10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE88BE47-8800-4943-AE31-DB182DF05A10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE88BE47-8800-4943-AE31-DB182DF05A10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE88BE47-8800-4943-AE31-DB182DF05A10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,6 +128,7 @@ Global
 		{15CCE140-F71D-43A7-8FBA-6FAEBE9A173B} = {E7C803FB-1257-41D7-BFBC-FDEF0BC06DF4}
 		{DF63A6C4-3FF5-4D91-9355-680098DF394A} = {2B2E0D7E-655B-4BD0-B306-2291089CE20F}
 		{829C2204-1501-4388-BA4D-58708F4169F1} = {6D9D7734-C498-40CD-AD53-772033F4D905}
+		{BE88BE47-8800-4943-AE31-DB182DF05A10} = {9F8923F0-7A9D-44CE-B43E-B52653F84454}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88FA1763-3B70-413F-8958-1FC2135F8481}

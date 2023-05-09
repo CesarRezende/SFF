@@ -1,3 +1,6 @@
+using Infra.IoC;
+using SFF.Infra.Web.Startup;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var _configuration = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json", optional: false)
+        .Build();
+
+ContainerManager.GetContainer().AddDbConfigurations(_configuration).AddDefaults();
 
 var app = builder.Build();
 
