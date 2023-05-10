@@ -7,7 +7,7 @@ namespace SFF.Infra.Core.CQRS.Implementation
     public class QueryDispatcher : IQueryDispatcher
     {
         private readonly IContainer _container;
-        private readonly ILogger _logger;
+        private readonly ILogger<QueryDispatcher> _logger;
         private readonly Func<IValidationDictionary> _validationDictionary;
         private readonly IValidationService _validationService;
 
@@ -15,7 +15,7 @@ namespace SFF.Infra.Core.CQRS.Implementation
         (
             Func<IValidationDictionary> validationDictionary,
             IContainer container,
-            ILogger logger,
+            ILogger<QueryDispatcher> logger,
             IValidationService validationService
         )
         {

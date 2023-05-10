@@ -1,7 +1,7 @@
 ﻿using DryIoc;
 
 
-namespace Infra.IoC
+namespace SFF.Infra.IoC
 {
     public static class ContainerManager
     {

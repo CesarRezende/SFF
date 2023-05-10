@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Infra.Core\SFF.Infra.Core.csproj" />
     <ProjectReference Include="..\Infra.IoC\SFF.Infra.IoC.csproj" />
+    <ProjectReference Include="..\Infra.Repository\SFF.Infra.Repository.csproj" />
   </ItemGroup>
 
 </Project>

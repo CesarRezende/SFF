@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Flunt.Notifications;
-using Infra.IoC;
+using SFF.Infra.IoC;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -17,17 +17,12 @@ namespace SFF.Applications.API.Controllers
 
         protected readonly ICommandDispatcher CommandDispatcher;
         protected readonly IQueryDispatcher QueryDispatcher;
-        private readonly Func<IValidationDictionary> _modelStateResolver;
-        protected readonly IMapper _mapper;
         protected readonly ILogger<BaseController> _logger;
-        public BaseController(IMapper mapper, ILogger<BaseController> logger)
+        public BaseController(ILogger<BaseController> logger, IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher)
         {
-            var container = ContainerManager.GetContainer();
 
-            QueryDispatcher = container.Resolve<IQueryDispatcher>();
-            CommandDispatcher = container.Resolve<ICommandDispatcher>();
-
-            _mapper = mapper != null ? mapper : throw new ArgumentNullException("mapper");
+            QueryDispatcher = queryDispatcher;
+            CommandDispatcher = commandDispatcher;
             _logger = logger != null ? logger : throw new ArgumentNullException("logger");
         }
 
@@ -63,7 +58,7 @@ namespace SFF.Applications.API.Controllers
 
             return commandResult.Success
                 ? Ok(commandResult.Data ?? (new { commandResult.Message, commandResult.Success }))
-                : (IActionResult)BadRequest(commandResult);
+                : BadRequest(commandResult);
         }
 
         protected async Task<IActionResult> ResponseAsync(Task<ICommandResult> commandResult)

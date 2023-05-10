@@ -15,11 +15,13 @@ namespace SFF.Infra.Repository.MapExtension.Administration
 
             var dbEntity = new db.User()
             {
-                Id = user.Id,
-                Name = user.Name,
-                Active = user.Active,
-                CreatedTime = user.CreatedTime,
-                UpdatedTime = user.UpdatedTime,
+                id = user.Id,
+                login = user.Login,
+                nome = user.Name,
+                administrator = user.Administrator,
+                desativado = user.Inactived,
+                //CreatedTime = user.CreatedTime,
+                //UpdatedTime = user.UpdatedTime,
             };
 
             return dbEntity;
@@ -32,9 +34,11 @@ namespace SFF.Infra.Repository.MapExtension.Administration
 
 
             var domainEntity = new domain.User(
-                id: user.Id,
-                name: user.Name,
-                active: user.Active,
+                id: user.id,
+                name: user.nome,
+                login: user.login,
+                administrator: user.administrator,
+                inactived: user.desativado,
                 createdTime: user.CreatedTime,
                 updatedTime: user.UpdatedTime
                 );

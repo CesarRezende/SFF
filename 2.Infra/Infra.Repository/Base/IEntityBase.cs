@@ -3,7 +3,7 @@
 
     public interface IEntityBase
     {
-        DateTime DataInclusao { get; set; }
-        DateTime? DataAlteracao { get; set; }
+        DateTimeOffset CreatedTime { get; set; }
+        DateTimeOffset? UpdatedTime { get; set; }
     }
 }

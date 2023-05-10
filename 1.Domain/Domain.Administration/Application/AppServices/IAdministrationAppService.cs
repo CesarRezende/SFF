@@ -1,4 +1,5 @@
-﻿using SFF.Domain.SharedKernel.Base;
+﻿using SFF.Domain.Administration.Application.Queriables;
+using SFF.Domain.SharedKernel.Base;
 
 namespace SFF.Domain.Administration.Application
 {

@@ -1,18 +1,22 @@
-﻿namespace SFF.Infra.Repository.Entities.Administration
+﻿using SFF.Infra.Repository.Base;
+
+namespace SFF.Infra.Repository.Entities.Administration
 {
-    public class User
+    public class User : IEntityBase
     {
         public User()
         {
         }
 
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public bool Active { get; set; }
+        public virtual long id { get; set; }
+        public virtual string login { get; set; }
+        public virtual string nome { get; set; }
+        public virtual bool administrator { get; set; }
+        public virtual bool desativado { get; set; }
 
 
         public virtual DateTimeOffset CreatedTime { get; set; }
-        public virtual DateTimeOffset UpdatedTime { get; set; }
+        public virtual DateTimeOffset? UpdatedTime { get; set; }
 
         #region RELATIONAL
 

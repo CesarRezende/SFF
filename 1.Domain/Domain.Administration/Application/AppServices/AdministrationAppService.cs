@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using SFF.Domain.Administration.Application.Queriables;
 using SFF.Infra.Core.CQRS.Interfaces;
 
-namespace SFF.Domain.Administration.Application
+namespace SFF.Domain.Administration.Application.AppServices
 {
     public class AdministrationAppService : IAdministrationAppService
     {
@@ -10,7 +11,7 @@ namespace SFF.Domain.Administration.Application
         private readonly IEventDispatcher _dispatcher;
         //private readonly IUserRepository _userRepository;
         private IConfiguration _configuration;
-        private readonly ILogger _logger;
+        private readonly ILogger<AdministrationAppService> _logger;
 
         public IAdministrationQueryable Query { get; }
 

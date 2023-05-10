@@ -8,11 +8,14 @@ namespace SFF.Infra.Repository.EntityConfiguration.Administration
     {
         public virtual void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("User", "administration");
-            builder.HasKey(t => t.Id);
-            builder.Property(x => x.CreatedTime).IsRequired();
-            builder.Property(x => x.UpdatedTime).IsRequired();
-            builder.Property(x => x.Active).IsRequired();
+            builder.ToTable("usuario", "public");
+            builder.HasKey(t => t.id).HasName("id");
+            builder.Property(x => x.nome).HasColumnName("nome").IsRequired();
+            builder.Property(x => x.login).HasColumnName("login").IsRequired();
+            builder.Property(x => x.administrator).HasColumnName("administrator").IsRequired();
+            builder.Property(x => x.desativado).HasColumnName("desativado").IsRequired();
+            builder.Property(x => x.CreatedTime).HasColumnName("hora_criacao").IsRequired();
+            builder.Property(x => x.UpdatedTime).HasColumnName("hora_atualizacao").IsRequired();
         }
     }
 }

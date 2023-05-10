@@ -20,9 +20,9 @@ namespace SFF.Infra.Repository.Repositories.Administration
 
         }
 
-        private static readonly Func<SFFDbContext, Guid, Task<db.User>> _findUser =
-            EF.CompileAsyncQuery((SFFDbContext contexto, Guid userId) =>
-                contexto.User.AsNoTracking().FirstOrDefault(x => x.Id == userId));
+        private static readonly Func<SFFDbContext, long, Task<db.User>> _findUser =
+            EF.CompileAsyncQuery((SFFDbContext contexto, long userId) =>
+                contexto.User.AsNoTracking().FirstOrDefault(x => x.id == userId));
 
 
         public Task DeleteAsync(domain.User entity)
@@ -36,7 +36,7 @@ namespace SFF.Infra.Repository.Repositories.Administration
         }
 
 
-        public async Task<domain.User> GetByIdAsync(Guid id)
+        public async Task<domain.User> GetByIdAsync(long id)
         {
 
             try
@@ -80,19 +80,19 @@ namespace SFF.Infra.Repository.Repositories.Administration
         {
 
             var updateUser = userUpdated.ToDbEntity();
-            updateUser.UpdatedTime = DateTimeOffset.UtcNow;
+            //updateUser.UpdatedTime = DateTimeOffset.UtcNow;
 
             try
             {
-                var currentUser = await _dbContext.User.FirstAsync(x => x.Id == updateUser.Id);
+                var currentUser = await _dbContext.User.FirstAsync(x => x.id == updateUser.id);
 
-                currentUser.Active = updateUser.Active;
+                //currentUser.Active = updateUser.Active;
 
                 await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"An unexpected error occurred while tring to update the user {updateUser.Id} in the database");
+                _logger.LogError(ex, $"An unexpected error occurred while tring to update the user {updateUser.id} in the database");
                 throw;
             }
             finally

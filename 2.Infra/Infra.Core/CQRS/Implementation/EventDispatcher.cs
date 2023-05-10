@@ -9,12 +9,12 @@ namespace SFF.Infra.Core.CQRS.Implementation
     public class EventDispatcher : IEventDispatcher
     {
         private readonly IContainer _container;
-        private readonly ILogger _logger;
+        private readonly ILogger<EventDispatcher> _logger;
 
         public EventDispatcher
         (
             IContainer container,
-            ILogger logger
+            ILogger<EventDispatcher> logger
         )
         {
             _container = container;

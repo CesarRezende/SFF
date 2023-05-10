@@ -1,4 +1,4 @@
-﻿using Infra.IoC;
+﻿using SFF.Infra.IoC;
 using SFF.Infra.Core.CQRS.Interfaces;
 using DryIoc;
 

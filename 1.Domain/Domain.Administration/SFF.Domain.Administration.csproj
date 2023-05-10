@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\Handlers\Command\" />
+    <Folder Include="Application\Handlers\Events\" />
+    <Folder Include="Application\Models\" />
+    <Folder Include="Application\Commands\" />
     <Folder Include="Core\ValueObjects\" />
   </ItemGroup>
 

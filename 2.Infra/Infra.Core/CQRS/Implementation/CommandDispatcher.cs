@@ -2,18 +2,13 @@
 using Microsoft.Extensions.Logging;
 using SFF.Infra.Core.CQRS.Interfaces;
 using SFF.Infra.Core.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SFF.Infra.Core.CQRS.Implementation
 {
     public class CommandDispatcher : ICommandDispatcher
     {
         private readonly IContainer _container;
-        private readonly ILogger _logger;
+        private readonly ILogger<CommandDispatcher> _logger;
         private readonly Func<IValidationDictionary> _validationDictionary;
         private readonly IValidationService _validationService;
 
@@ -21,7 +16,7 @@ namespace SFF.Infra.Core.CQRS.Implementation
         (
             Func<IValidationDictionary> validationDictionary,
             IContainer container,
-            ILogger logger,
+            ILogger<CommandDispatcher> logger,
             IValidationService validationService
         )
         {

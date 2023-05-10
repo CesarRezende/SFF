@@ -2,7 +2,7 @@
 {
     public abstract class AggregateRoot<T>: Entity<T>, IAggregateRoot
     {
-        protected AggregateRoot(T id, DateTimeOffset createdTime, DateTimeOffset updatedTime)
+        protected AggregateRoot(T id, DateTimeOffset createdTime, DateTimeOffset? updatedTime)
             :base(id)
         {
             CreatedTime = createdTime;
@@ -10,6 +10,6 @@
         }
 
         public DateTimeOffset CreatedTime { get; protected set; }
-        public DateTimeOffset UpdatedTime { get; protected set; }
+        public DateTimeOffset? UpdatedTime { get; protected set; }
     }
 }
