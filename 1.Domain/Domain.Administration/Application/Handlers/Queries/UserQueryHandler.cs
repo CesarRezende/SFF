@@ -5,7 +5,7 @@ using SFF.Infra.Core.CQRS.Interfaces;
 namespace SFF.Domain.Administration.Application.Handlers.Queries
 {
     public class UserQueryHandler :
-        IQueryHandler<GetAllUserQuery, IEnumerable<UserQueryResult>>
+        IQueryHandler<GetAllUsersQuery, IEnumerable<UserQueryResult>>
     {
         private readonly IAdministrationAppService _administrationAppService;
         public UserQueryHandler(IAdministrationAppService administrationAppService)
@@ -13,7 +13,7 @@ namespace SFF.Domain.Administration.Application.Handlers.Queries
             _administrationAppService = administrationAppService;
         }
 
-        public Task<IEnumerable<UserQueryResult>> Retrieve(GetAllUserQuery query)
+        public Task<IEnumerable<UserQueryResult>> Retrieve(GetAllUsersQuery query)
         {
             return _administrationAppService.Query.GetAll();
         }

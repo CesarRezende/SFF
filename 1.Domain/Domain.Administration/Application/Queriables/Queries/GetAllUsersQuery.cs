@@ -2,7 +2,7 @@
 
 namespace SFF.Domain.Administration.Application.Queriables.Queries
 {
-    public class GetAllUserQuery: IQuery
+    public class GetAllUsersQuery: IQuery
     {
     }
 }

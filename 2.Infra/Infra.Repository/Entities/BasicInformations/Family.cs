@@ -1,25 +1,22 @@
 ﻿using SFF.Infra.Repository.Base;
 
-namespace SFF.Infra.Repository.Entities.Administration
+namespace SFF.Infra.Repository.Entities.BasicInformations
 {
-    public class User : IEntityBase
+    public class Family : IEntityBase
     {
-        public User()
+
+        public Family()
         {
         }
 
         public virtual long id { get; set; }
-        public virtual string login { get; set; }
-        public virtual string nome { get; set; }
-        public virtual bool administrator { get; set; }
+        public virtual string descricao { get; set; }
         public virtual bool desativado { get; set; }
-
 
         public virtual DateTimeOffset createdTime { get; set; }
         public virtual DateTimeOffset? updatedTime { get; set; }
 
         #region RELATIONAL
-
 
         #endregion
     }

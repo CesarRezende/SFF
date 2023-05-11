@@ -24,8 +24,8 @@ namespace SFF.Applications.API.Controllers.v1
         [Route("all")]
         public async Task<IEnumerable<UserQueryResult>> GetAllUsers()
         {
-            var query = new GetAllUserQuery();
-            return await QueryDispatcher.Dispatch<GetAllUserQuery, IEnumerable<UserQueryResult>>(query);
+            var query = new GetAllUsersQuery();
+            return await QueryDispatcher.Dispatch<GetAllUsersQuery, IEnumerable<UserQueryResult>>(query);
         }
 
     }

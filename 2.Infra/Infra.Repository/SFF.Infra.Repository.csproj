@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\1.Domain\Domain.Administration\SFF.Domain.Administration.csproj" />
+    <ProjectReference Include="..\..\1.Domain\Domain.BasicInformations\SFF.Domain.BasicInformations.csproj" />
     <ProjectReference Include="..\..\1.Domain\Domain.Financial\SFF.Domain.Financial.csproj" />
     <ProjectReference Include="..\Infra.Core\SFF.Infra.Core.csproj" />
   </ItemGroup>

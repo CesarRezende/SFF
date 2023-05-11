@@ -1,0 +1,359 @@
+2023-05-11T13:28:59.9903365-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Now listening on: "https://localhost:7245"
+2023-05-11T13:29:00.0072012-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Now listening on: "http://localhost:5245"
+2023-05-11T13:29:00.0129249-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Application started. Press Ctrl+C to shut down.
+2023-05-11T13:29:00.0140380-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Hosting environment: "Development"
+2023-05-11T13:29:00.0144043-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Content root path: "D:\Projetos\repos\SFF\3.Applications\Applications.API\"
+2023-05-11T13:29:00.8430427-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/12) Request starting HTTP/2 GET https://localhost:7245/swagger/index.html - -
+2023-05-11T13:29:01.2202395-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/18) Request starting HTTP/2 GET https://localhost:7245/_framework/aspnetcore-browser-refresh.js - -
+2023-05-11T13:29:01.2243049-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/17) Request finished HTTP/2 GET https://localhost:7245/swagger/index.html - - - 200 - text/html;charset=utf-8 385.5909ms
+2023-05-11T13:29:01.2266175-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/18) Request finished HTTP/2 GET https://localhost:7245/_framework/aspnetcore-browser-refresh.js - - - 200 11998 application/javascript;+charset=utf-8 5.6269ms
+2023-05-11T13:29:01.3559903-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/13) Request starting HTTP/2 GET https://localhost:7245/swagger/v1/swagger.json - -
+2023-05-11T13:29:01.4706117-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/13) Request finished HTTP/2 GET https://localhost:7245/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 114.4483ms
+2023-05-11T13:29:04.6678071-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/12) Request starting HTTP/2 GET https://localhost:7245/v1/Administration/all - -
+2023-05-11T13:29:04.6771425-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/12) Request:
+Protocol: HTTP/2
+Method: GET
+Scheme: https
+PathBase: 
+Path: /v1/Administration/all
+Accept: application/json
+Host: localhost:7245
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36
+:method: [Redacted]
+Accept-Encoding: gzip, deflate, br
+Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: [Redacted]
+Referer: [Redacted]
+sec-ch-ua: [Redacted]
+sec-ch-ua-mobile: [Redacted]
+sec-ch-ua-platform: [Redacted]
+sec-fetch-site: [Redacted]
+sec-fetch-mode: [Redacted]
+sec-fetch-dest: [Redacted]
+2023-05-11T13:29:04.6835864-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/12) Executing endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:29:04.7074087-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/12) Route matched with "{action = \"GetAllUsers\", controller = \"Administration\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult]] GetAllUsers()" on controller "SFF.Applications.API.Controllers.v1.AdministrationController" ("SFF.Applications.API").
+2023-05-11T13:29:04.7195766-03:00 [INF] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/12) Foi encontrado o handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:29:04.7212164-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/12) Executando handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:29:06.0041103-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/16) Executando handler UserQueryHandler para o tipo GetAllUserQuery com sucesso!
+2023-05-11T13:29:06.0181527-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor] (DESKTOP-N6Q2SA6/16) Executing "ObjectResult", writing value of type '"System.Collections.Generic.List`1[[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult, SFF.Domain.Administration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'.
+2023-05-11T13:29:06.0465724-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/16) Executed action "SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)" in 1332.9911ms
+2023-05-11T13:29:06.0479678-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/16) Executed endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:29:06.0498215-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/16) Response:
+StatusCode: 200
+Content-Type: application/json; charset=utf-8
+Date: Thu, 11 May 2023 16:29:05 GMT
+Server: Kestrel
+2023-05-11T13:29:06.0515425-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/16) Request finished HTTP/2 GET https://localhost:7245/v1/Administration/all - - - 200 - application/json;+charset=utf-8 1383.7702ms
+2023-05-11T13:34:13.6103573-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Now listening on: "https://localhost:7245"
+2023-05-11T13:34:13.6237699-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Now listening on: "http://localhost:5245"
+2023-05-11T13:34:13.6275164-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Application started. Press Ctrl+C to shut down.
+2023-05-11T13:34:13.6281038-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Hosting environment: "Development"
+2023-05-11T13:34:13.6282736-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Content root path: "D:\Projetos\repos\SFF\3.Applications\Applications.API\"
+2023-05-11T13:34:14.4753544-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/18) Request starting HTTP/2 GET https://localhost:7245/swagger/index.html - -
+2023-05-11T13:34:14.8153470-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/13) Request starting HTTP/2 GET https://localhost:7245/_framework/aspnetcore-browser-refresh.js - -
+2023-05-11T13:34:14.8171329-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/17) Request finished HTTP/2 GET https://localhost:7245/swagger/index.html - - - 200 - text/html;charset=utf-8 347.9201ms
+2023-05-11T13:34:14.8291813-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/13) Request finished HTTP/2 GET https://localhost:7245/_framework/aspnetcore-browser-refresh.js - - - 200 11998 application/javascript;+charset=utf-8 16.8290ms
+2023-05-11T13:34:14.9458280-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/10) Request starting HTTP/2 GET https://localhost:7245/swagger/v1/swagger.json - -
+2023-05-11T13:34:15.0656522-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/10) Request finished HTTP/2 GET https://localhost:7245/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 119.7826ms
+2023-05-11T13:34:17.6549943-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/18) Request starting HTTP/2 GET https://localhost:7245/v1/Administration/all - -
+2023-05-11T13:34:17.6613108-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/18) Request:
+Protocol: HTTP/2
+Method: GET
+Scheme: https
+PathBase: 
+Path: /v1/Administration/all
+Accept: application/json
+Host: localhost:7245
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36
+:method: [Redacted]
+Accept-Encoding: gzip, deflate, br
+Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: [Redacted]
+Referer: [Redacted]
+sec-ch-ua: [Redacted]
+sec-ch-ua-mobile: [Redacted]
+sec-ch-ua-platform: [Redacted]
+sec-fetch-site: [Redacted]
+sec-fetch-mode: [Redacted]
+sec-fetch-dest: [Redacted]
+2023-05-11T13:34:17.6682274-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/18) Executing endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:34:17.6925499-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/18) Route matched with "{action = \"GetAllUsers\", controller = \"Administration\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult]] GetAllUsers()" on controller "SFF.Applications.API.Controllers.v1.AdministrationController" ("SFF.Applications.API").
+2023-05-11T13:34:17.7075449-03:00 [INF] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/18) Foi encontrado o handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:34:17.7092191-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/18) Executando handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:34:19.0162304-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/17) Executando handler UserQueryHandler para o tipo GetAllUserQuery com sucesso!
+2023-05-11T13:34:19.0266428-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor] (DESKTOP-N6Q2SA6/17) Executing "ObjectResult", writing value of type '"System.Collections.Generic.List`1[[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult, SFF.Domain.Administration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'.
+2023-05-11T13:34:19.0544370-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/17) Executed action "SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)" in 1355.3219ms
+2023-05-11T13:34:19.0557320-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/17) Executed endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:34:19.0573228-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/17) Response:
+StatusCode: 200
+Content-Type: application/json; charset=utf-8
+Date: Thu, 11 May 2023 16:34:18 GMT
+Server: Kestrel
+2023-05-11T13:34:19.0587462-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/17) Request finished HTTP/2 GET https://localhost:7245/v1/Administration/all - - - 200 - application/json;+charset=utf-8 1403.7812ms
+2023-05-11T13:34:21.4520973-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/18) Request starting HTTP/2 GET https://localhost:7245/v1/Administration/all - -
+2023-05-11T13:34:21.4529376-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/18) Request:
+Protocol: HTTP/2
+Method: GET
+Scheme: https
+PathBase: 
+Path: /v1/Administration/all
+Accept: application/json
+Host: localhost:7245
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36
+:method: [Redacted]
+Accept-Encoding: gzip, deflate, br
+Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: [Redacted]
+Referer: [Redacted]
+sec-ch-ua: [Redacted]
+sec-ch-ua-mobile: [Redacted]
+sec-ch-ua-platform: [Redacted]
+sec-fetch-site: [Redacted]
+sec-fetch-mode: [Redacted]
+sec-fetch-dest: [Redacted]
+2023-05-11T13:34:21.4562026-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/18) Executing endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:34:21.4568841-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/18) Route matched with "{action = \"GetAllUsers\", controller = \"Administration\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult]] GetAllUsers()" on controller "SFF.Applications.API.Controllers.v1.AdministrationController" ("SFF.Applications.API").
+2023-05-11T13:34:21.4722151-03:00 [INF] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/18) Foi encontrado o handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:34:21.4727730-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/18) Executando handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:34:21.4933313-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/17) Executando handler UserQueryHandler para o tipo GetAllUserQuery com sucesso!
+2023-05-11T13:34:21.4940674-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor] (DESKTOP-N6Q2SA6/17) Executing "ObjectResult", writing value of type '"System.Collections.Generic.List`1[[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult, SFF.Domain.Administration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'.
+2023-05-11T13:34:21.4955188-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/17) Executed action "SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)" in 37.4882ms
+2023-05-11T13:34:21.4959400-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/17) Executed endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:34:21.4966805-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/17) Response:
+StatusCode: 200
+Content-Type: application/json; charset=utf-8
+Date: Thu, 11 May 2023 16:34:20 GMT
+Server: Kestrel
+2023-05-11T13:34:21.4971620-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/17) Request finished HTTP/2 GET https://localhost:7245/v1/Administration/all - - - 200 - application/json;+charset=utf-8 45.4074ms
+2023-05-11T13:34:22.3354799-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/18) Request starting HTTP/2 GET https://localhost:7245/v1/Administration/all - -
+2023-05-11T13:34:22.3361355-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/18) Request:
+Protocol: HTTP/2
+Method: GET
+Scheme: https
+PathBase: 
+Path: /v1/Administration/all
+Accept: application/json
+Host: localhost:7245
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36
+:method: [Redacted]
+Accept-Encoding: gzip, deflate, br
+Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: [Redacted]
+Referer: [Redacted]
+sec-ch-ua: [Redacted]
+sec-ch-ua-mobile: [Redacted]
+sec-ch-ua-platform: [Redacted]
+sec-fetch-site: [Redacted]
+sec-fetch-mode: [Redacted]
+sec-fetch-dest: [Redacted]
+2023-05-11T13:34:22.3371250-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/18) Executing endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:34:22.3375201-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/18) Route matched with "{action = \"GetAllUsers\", controller = \"Administration\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult]] GetAllUsers()" on controller "SFF.Applications.API.Controllers.v1.AdministrationController" ("SFF.Applications.API").
+2023-05-11T13:34:22.3386844-03:00 [INF] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/18) Foi encontrado o handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:34:22.3390892-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/18) Executando handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:34:22.3443635-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/8) Executando handler UserQueryHandler para o tipo GetAllUserQuery com sucesso!
+2023-05-11T13:34:22.3447961-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor] (DESKTOP-N6Q2SA6/8) Executing "ObjectResult", writing value of type '"System.Collections.Generic.List`1[[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult, SFF.Domain.Administration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'.
+2023-05-11T13:34:22.3482949-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/8) Executed action "SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)" in 9.7136ms
+2023-05-11T13:34:22.3488851-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/8) Executed endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:34:22.3492987-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/8) Response:
+StatusCode: 200
+Content-Type: application/json; charset=utf-8
+Date: Thu, 11 May 2023 16:34:21 GMT
+Server: Kestrel
+2023-05-11T13:34:22.3500765-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/8) Request finished HTTP/2 GET https://localhost:7245/v1/Administration/all - - - 200 - application/json;+charset=utf-8 14.5242ms
+2023-05-11T13:34:22.9676096-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/15) Request starting HTTP/2 GET https://localhost:7245/v1/Administration/all - -
+2023-05-11T13:34:22.9684417-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/15) Request:
+Protocol: HTTP/2
+Method: GET
+Scheme: https
+PathBase: 
+Path: /v1/Administration/all
+Accept: application/json
+Host: localhost:7245
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36
+:method: [Redacted]
+Accept-Encoding: gzip, deflate, br
+Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: [Redacted]
+Referer: [Redacted]
+sec-ch-ua: [Redacted]
+sec-ch-ua-mobile: [Redacted]
+sec-ch-ua-platform: [Redacted]
+sec-fetch-site: [Redacted]
+sec-fetch-mode: [Redacted]
+sec-fetch-dest: [Redacted]
+2023-05-11T13:34:22.9695119-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/15) Executing endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:34:22.9707924-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/15) Route matched with "{action = \"GetAllUsers\", controller = \"Administration\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult]] GetAllUsers()" on controller "SFF.Applications.API.Controllers.v1.AdministrationController" ("SFF.Applications.API").
+2023-05-11T13:34:22.9723185-03:00 [INF] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/15) Foi encontrado o handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:34:22.9727712-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/15) Executando handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:34:22.9786888-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/17) Executando handler UserQueryHandler para o tipo GetAllUserQuery com sucesso!
+2023-05-11T13:34:22.9790718-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor] (DESKTOP-N6Q2SA6/17) Executing "ObjectResult", writing value of type '"System.Collections.Generic.List`1[[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult, SFF.Domain.Administration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'.
+2023-05-11T13:34:22.9795467-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/17) Executed action "SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)" in 7.4377ms
+2023-05-11T13:34:22.9798965-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/17) Executed endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:34:22.9801714-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/17) Response:
+StatusCode: 200
+Content-Type: application/json; charset=utf-8
+Date: Thu, 11 May 2023 16:34:22 GMT
+Server: Kestrel
+2023-05-11T13:34:22.9805573-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/17) Request finished HTTP/2 GET https://localhost:7245/v1/Administration/all - - - 200 - application/json;+charset=utf-8 13.0824ms
+2023-05-11T13:34:23.5728556-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/19) Request starting HTTP/2 GET https://localhost:7245/v1/Administration/all - -
+2023-05-11T13:34:23.5737305-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/19) Request:
+Protocol: HTTP/2
+Method: GET
+Scheme: https
+PathBase: 
+Path: /v1/Administration/all
+Accept: application/json
+Host: localhost:7245
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36
+:method: [Redacted]
+Accept-Encoding: gzip, deflate, br
+Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: [Redacted]
+Referer: [Redacted]
+sec-ch-ua: [Redacted]
+sec-ch-ua-mobile: [Redacted]
+sec-ch-ua-platform: [Redacted]
+sec-fetch-site: [Redacted]
+sec-fetch-mode: [Redacted]
+sec-fetch-dest: [Redacted]
+2023-05-11T13:34:23.5747804-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/19) Executing endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:34:23.5750975-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/19) Route matched with "{action = \"GetAllUsers\", controller = \"Administration\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult]] GetAllUsers()" on controller "SFF.Applications.API.Controllers.v1.AdministrationController" ("SFF.Applications.API").
+2023-05-11T13:34:23.5762971-03:00 [INF] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/19) Foi encontrado o handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:34:23.5765852-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/19) Executando handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T13:34:23.5826233-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/17) Executando handler UserQueryHandler para o tipo GetAllUserQuery com sucesso!
+2023-05-11T13:34:23.5829447-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor] (DESKTOP-N6Q2SA6/17) Executing "ObjectResult", writing value of type '"System.Collections.Generic.List`1[[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult, SFF.Domain.Administration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'.
+2023-05-11T13:34:23.5835002-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/17) Executed action "SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)" in 7.4415ms
+2023-05-11T13:34:23.5838447-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/17) Executed endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T13:34:23.5841148-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/17) Response:
+StatusCode: 200
+Content-Type: application/json; charset=utf-8
+Date: Thu, 11 May 2023 16:34:23 GMT
+Server: Kestrel
+2023-05-11T13:34:23.5845624-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/17) Request finished HTTP/2 GET https://localhost:7245/v1/Administration/all - - - 200 - application/json;+charset=utf-8 11.7321ms
+2023-05-11T17:18:48.1075912-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Now listening on: "https://localhost:7245"
+2023-05-11T17:18:48.1214274-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Now listening on: "http://localhost:5245"
+2023-05-11T17:18:48.1252332-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Application started. Press Ctrl+C to shut down.
+2023-05-11T17:18:48.1258896-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Hosting environment: "Development"
+2023-05-11T17:18:48.1261395-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Content root path: "D:\Projetos\repos\SFF\3.Applications\Applications.API\"
+2023-05-11T17:18:48.6664977-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/14) Request starting HTTP/2 GET https://localhost:7245/swagger/index.html - -
+2023-05-11T17:18:48.9989035-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/16) Request finished HTTP/2 GET https://localhost:7245/swagger/index.html - - - 200 - text/html;charset=utf-8 335.4477ms
+2023-05-11T17:18:49.0106849-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/15) Request starting HTTP/2 GET https://localhost:7245/_framework/aspnetcore-browser-refresh.js - -
+2023-05-11T17:18:49.0136467-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/15) Request finished HTTP/2 GET https://localhost:7245/_framework/aspnetcore-browser-refresh.js - - - 200 11998 application/javascript;+charset=utf-8 2.9262ms
+2023-05-11T17:18:49.1399733-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/13) Request starting HTTP/2 GET https://localhost:7245/swagger/v1/swagger.json - -
+2023-05-11T17:18:49.2674145-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/13) Request finished HTTP/2 GET https://localhost:7245/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 127.4333ms
+2023-05-11T17:18:56.1001706-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/6) Request starting HTTP/2 GET https://localhost:7245/v1/Administration/all - -
+2023-05-11T17:18:56.1068108-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/6) Request:
+Protocol: HTTP/2
+Method: GET
+Scheme: https
+PathBase: 
+Path: /v1/Administration/all
+Accept: application/json
+Host: localhost:7245
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36
+:method: [Redacted]
+Accept-Encoding: gzip, deflate, br
+Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: [Redacted]
+Referer: [Redacted]
+sec-ch-ua: [Redacted]
+sec-ch-ua-mobile: [Redacted]
+sec-ch-ua-platform: [Redacted]
+sec-fetch-site: [Redacted]
+sec-fetch-mode: [Redacted]
+sec-fetch-dest: [Redacted]
+2023-05-11T17:18:56.1127468-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/6) Executing endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T17:18:56.1360629-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/6) Route matched with "{action = \"GetAllUsers\", controller = \"Administration\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult]] GetAllUsers()" on controller "SFF.Applications.API.Controllers.v1.AdministrationController" ("SFF.Applications.API").
+2023-05-11T17:18:56.1488723-03:00 [INF] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/6) Foi encontrado o handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T17:18:56.1509925-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/6) Executando handler UserQueryHandler para o tipo GetAllUserQuery
+2023-05-11T17:18:57.3375523-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/16) Executando handler UserQueryHandler para o tipo GetAllUserQuery com sucesso!
+2023-05-11T17:18:57.3468694-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor] (DESKTOP-N6Q2SA6/16) Executing "ObjectResult", writing value of type '"System.Collections.Generic.List`1[[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult, SFF.Domain.Administration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'.
+2023-05-11T17:18:57.3699728-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/16) Executed action "SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)" in 1227.3574ms
+2023-05-11T17:18:57.3713125-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/16) Executed endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T17:18:57.3728002-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/16) Response:
+StatusCode: 200
+Content-Type: application/json; charset=utf-8
+Date: Thu, 11 May 2023 20:18:57 GMT
+Server: Kestrel
+2023-05-11T17:18:57.3740473-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/16) Request finished HTTP/2 GET https://localhost:7245/v1/Administration/all - - - 200 - application/json;+charset=utf-8 1273.9650ms
+2023-05-11T18:55:24.3307830-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Now listening on: "https://localhost:7245"
+2023-05-11T18:55:24.3486990-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Now listening on: "http://localhost:5245"
+2023-05-11T18:55:24.3529472-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Application started. Press Ctrl+C to shut down.
+2023-05-11T18:55:24.3538347-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Hosting environment: "Development"
+2023-05-11T18:55:24.3540961-03:00 [INF] [Microsoft.Hosting.Lifetime] (DESKTOP-N6Q2SA6/1) Content root path: "D:\Projetos\repos\SFF\3.Applications\Applications.API\"
+2023-05-11T18:55:24.8302145-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/13) Request starting HTTP/2 GET https://localhost:7245/swagger/index.html - -
+2023-05-11T18:55:25.1279453-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/8) Request finished HTTP/2 GET https://localhost:7245/swagger/index.html - - - 200 - text/html;charset=utf-8 301.0399ms
+2023-05-11T18:55:25.1424239-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/10) Request starting HTTP/2 GET https://localhost:7245/_framework/aspnetcore-browser-refresh.js - -
+2023-05-11T18:55:25.1451651-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/10) Request finished HTTP/2 GET https://localhost:7245/_framework/aspnetcore-browser-refresh.js - - - 200 11998 application/javascript;+charset=utf-8 2.6932ms
+2023-05-11T18:55:25.2633383-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/15) Request starting HTTP/2 GET https://localhost:7245/swagger/v1/swagger.json - -
+2023-05-11T18:55:25.3696398-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/15) Request finished HTTP/2 GET https://localhost:7245/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 106.3474ms
+2023-05-11T18:55:29.7961617-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/15) Request starting HTTP/2 GET https://localhost:7245/v1/Administration/all - -
+2023-05-11T18:55:29.8027962-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/15) Request:
+Protocol: HTTP/2
+Method: GET
+Scheme: https
+PathBase: 
+Path: /v1/Administration/all
+Accept: application/json
+Host: localhost:7245
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36
+:method: [Redacted]
+Accept-Encoding: gzip, deflate, br
+Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: [Redacted]
+Referer: [Redacted]
+sec-ch-ua: [Redacted]
+sec-ch-ua-mobile: [Redacted]
+sec-ch-ua-platform: [Redacted]
+sec-fetch-site: [Redacted]
+sec-fetch-mode: [Redacted]
+sec-fetch-dest: [Redacted]
+2023-05-11T18:55:29.8093413-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/15) Executing endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T18:55:29.8381149-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/15) Route matched with "{action = \"GetAllUsers\", controller = \"Administration\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult]] GetAllUsers()" on controller "SFF.Applications.API.Controllers.v1.AdministrationController" ("SFF.Applications.API").
+2023-05-11T18:55:29.8518761-03:00 [INF] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/15) Foi encontrado o handler UserQueryHandler para o tipo GetAllUsersQuery
+2023-05-11T18:55:29.8537855-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/15) Executando handler UserQueryHandler para o tipo GetAllUsersQuery
+2023-05-11T18:55:31.4461345-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/18) Executando handler UserQueryHandler para o tipo GetAllUsersQuery com sucesso!
+2023-05-11T18:55:31.4575567-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor] (DESKTOP-N6Q2SA6/18) Executing "ObjectResult", writing value of type '"System.Collections.Generic.List`1[[SFF.Domain.Administration.Application.Queriables.QueryResult.UserQueryResult, SFF.Domain.Administration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'.
+2023-05-11T18:55:31.4885604-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/18) Executed action "SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)" in 1643.261ms
+2023-05-11T18:55:31.4903323-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/18) Executed endpoint '"SFF.Applications.API.Controllers.v1.AdministrationController.GetAllUsers (SFF.Applications.API)"'
+2023-05-11T18:55:31.4941274-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/18) Response:
+StatusCode: 200
+Content-Type: application/json; charset=utf-8
+Date: Thu, 11 May 2023 21:55:31 GMT
+Server: Kestrel
+2023-05-11T18:55:31.4957259-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/18) Request finished HTTP/2 GET https://localhost:7245/v1/Administration/all - - - 200 - application/json;+charset=utf-8 1699.6528ms
+2023-05-11T18:55:37.4151346-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/13) Request starting HTTP/2 GET https://localhost:7245/v1/BasicInformations/all - -
+2023-05-11T18:55:37.4169952-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/13) Request:
+Protocol: HTTP/2
+Method: GET
+Scheme: https
+PathBase: 
+Path: /v1/BasicInformations/all
+Accept: application/json
+Host: localhost:7245
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36
+:method: [Redacted]
+Accept-Encoding: gzip, deflate, br
+Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: [Redacted]
+Referer: [Redacted]
+sec-ch-ua: [Redacted]
+sec-ch-ua-mobile: [Redacted]
+sec-ch-ua-platform: [Redacted]
+sec-fetch-site: [Redacted]
+sec-fetch-mode: [Redacted]
+sec-fetch-dest: [Redacted]
+2023-05-11T18:55:37.4214381-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/13) Executing endpoint '"SFF.Applications.API.Controllers.v1.BasicInformationsController.GetAllFamilys (SFF.Applications.API)"'
+2023-05-11T18:55:37.4253519-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/13) Route matched with "{action = \"GetAllFamilys\", controller = \"BasicInformations\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[SFF.Domain.BasicInformations.Application.Queriables.QueryResult.FamilyQueryResult]] GetAllFamilys()" on controller "SFF.Applications.API.Controllers.v1.BasicInformationsController" ("SFF.Applications.API").
+2023-05-11T18:55:37.4441820-03:00 [INF] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/13) Foi encontrado o handler FamilyQueryHandler para o tipo GetAllFamiliesQuery
+2023-05-11T18:55:37.4447991-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/13) Executando handler FamilyQueryHandler para o tipo GetAllFamiliesQuery
+2023-05-11T18:55:37.4616174-03:00 [DBG] [SFF.Infra.Core.CQRS.Implementation.QueryDispatcher] (DESKTOP-N6Q2SA6/8) Executando handler FamilyQueryHandler para o tipo GetAllFamiliesQuery com sucesso!
+2023-05-11T18:55:37.4622181-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor] (DESKTOP-N6Q2SA6/8) Executing "ObjectResult", writing value of type '"System.Collections.Generic.List`1[[SFF.Domain.BasicInformations.Application.Queriables.QueryResult.FamilyQueryResult, SFF.Domain.BasicInformations, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'.
+2023-05-11T18:55:37.4642487-03:00 [INF] [Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker] (DESKTOP-N6Q2SA6/8) Executed action "SFF.Applications.API.Controllers.v1.BasicInformationsController.GetAllFamilys (SFF.Applications.API)" in 37.215ms
+2023-05-11T18:55:37.4650252-03:00 [INF] [Microsoft.AspNetCore.Routing.EndpointMiddleware] (DESKTOP-N6Q2SA6/8) Executed endpoint '"SFF.Applications.API.Controllers.v1.BasicInformationsController.GetAllFamilys (SFF.Applications.API)"'
+2023-05-11T18:55:37.4655650-03:00 [INF] [Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware] (DESKTOP-N6Q2SA6/8) Response:
+StatusCode: 200
+Content-Type: application/json; charset=utf-8
+Date: Thu, 11 May 2023 21:55:37 GMT
+Server: Kestrel
+2023-05-11T18:55:37.4693089-03:00 [INF] [Microsoft.AspNetCore.Hosting.Diagnostics] (DESKTOP-N6Q2SA6/8) Request finished HTTP/2 GET https://localhost:7245/v1/BasicInformations/all - - - 200 - application/json;+charset=utf-8 54.1342ms

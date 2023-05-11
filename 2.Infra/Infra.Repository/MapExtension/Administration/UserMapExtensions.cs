@@ -39,8 +39,8 @@ namespace SFF.Infra.Repository.MapExtension.Administration
                 login: user.login,
                 administrator: user.administrator,
                 inactived: user.desativado,
-                createdTime: user.CreatedTime,
-                updatedTime: user.UpdatedTime
+                createdTime: user.createdTime,
+                updatedTime: user.updatedTime
                 );
 
             return domainEntity;

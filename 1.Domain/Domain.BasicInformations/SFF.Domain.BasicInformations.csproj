@@ -7,14 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain.SharedKernel\SFF.Domain.SharedKernel.csproj" />
+    <Folder Include="Application\Commands\" />
+    <Folder Include="Application\Handlers\Commands\" />
+    <Folder Include="Application\Handlers\Events\" />
+    <Folder Include="Application\Handlers\Models\" />
+    <Folder Include="Core\Aggregates\SpendingTypeAggregate\" />
+    <Folder Include="Core\ValueObjects\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Handlers\Commands\" />
-    <Folder Include="Application\Handlers\Events\" />
-    <Folder Include="Application\Commands\" />
-    <Folder Include="Core\ValueObjects\" />
+    <ProjectReference Include="..\Domain.SharedKernel\SFF.Domain.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

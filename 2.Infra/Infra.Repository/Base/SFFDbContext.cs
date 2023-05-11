@@ -1,25 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SFF.Infra.Repository.Entities.Administration;
 using SFF.Infra.Repository.EntityConfiguration.Administration;
 
 namespace SFF.Infra.Repository.Base
 {
-    public class SFFDbContext : DbContext
+    public partial class SFFDbContext : DbContext
     {
         public SFFDbContext(DbContextOptions optionsBuilder) : base(optionsBuilder)
         {
         }
         
-        public DbSet<User> User { get; set; }
-
-
-
         public override int SaveChanges()
         {
             var modifiedEntries = ChangeTracker.Entries().Where(x => x.Entity is IEntityBase && (x.State == EntityState.Added || x.State == EntityState.Modified));
@@ -32,13 +23,13 @@ namespace SFF.Infra.Repository.Base
 
                 if (entry.State == EntityState.Added)
                 {
-                    entity.CreatedTime = DateTime.Now;
+                    entity.createdTime = DateTime.Now;
                     continue;
                 }
 
-                Entry(entity).Property(x => x.CreatedTime).IsModified = false;
+                Entry(entity).Property(x => x.createdTime).IsModified = false;
 
-                entity.UpdatedTime = DateTime.Now;
+                entity.updatedTime = DateTime.Now;
             }
 
             return base.SaveChanges();
@@ -56,13 +47,13 @@ namespace SFF.Infra.Repository.Base
 
                 if (entry.State == EntityState.Added)
                 {
-                    entity.CreatedTime = DateTime.Now;
+                    entity.createdTime = DateTime.Now;
                     continue;
                 }
 
-                Entry(entity).Property(x => x.CreatedTime).IsModified = false;
+                Entry(entity).Property(x => x.createdTime).IsModified = false;
 
-                entity.UpdatedTime = DateTime.Now;
+                entity.updatedTime = DateTime.Now;
             }
 
             return base.SaveChangesAsync();
@@ -72,6 +63,7 @@ namespace SFF.Infra.Repository.Base
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SFFDbContext).Assembly);
             modelBuilder.RegisterAdministrationDbConfiguration();
+            modelBuilder.RegisterBasicInformationsDbConfiguration();
 
             base.OnModelCreating(modelBuilder);
         }

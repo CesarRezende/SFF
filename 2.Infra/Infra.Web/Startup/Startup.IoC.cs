@@ -19,14 +19,8 @@ namespace SFF.Infra.Web.Startup
         {
             _configuration = configuration;
 
-            //var conn = _configuration.GetConnectionString("DefaultConnection");
 
-            //var dbContextOptions = new DbContextOptionsBuilder()
-            //    .UseNpgsql(conn, o => { o.CommandTimeout(1000); })
-            //    .Options;
-
-            //container.UseInstance(dbContextOptions);
-            container.UseInstance( SFFDbContext.GetInstance(_configuration));
+            container.UseInstance(SFFDbContext.GetInstance(_configuration));
             container.UseInstance(_configuration);
 
             using var scope = container.OpenScope(Reuse.Scoped);
@@ -40,10 +34,10 @@ namespace SFF.Infra.Web.Startup
         {
             container = container.AddAssembly();
 
-            container.Register<IUnitOfWorkWithTransactionScope, UnitOfWorkWithTransactionScope>(reuse: Reuse.Scoped, ifAlreadyRegistered: IfAlreadyRegistered.Replace);
+            container.Register<IUnitOfWorkWithTransactionScope, UnitOfWorkWithTransactionScope>(reuse: Reuse.Scoped, ifAlreadyRegistered: IfAlreadyRegistered.Replace, setup: Setup.With(asResolutionCall: true));
 
             //container.Register(typeof(IValidator<>), reuse: Reuse.Singleton, made: Made.Of(factoryMethod: FactoryMethod.ConstructorWithResolvableArguments));
-            container.RegisterDelegate<IValidationDictionary>(r => { return new ModelStateWrapper(new ModelStateDictionary()); }, reuse: Reuse.Scoped, ifAlreadyRegistered: IfAlreadyRegistered.Replace);
+            container.RegisterDelegate<IValidationDictionary>(r => { return new ModelStateWrapper(new ModelStateDictionary()); }, reuse: Reuse.Scoped, ifAlreadyRegistered: IfAlreadyRegistered.Replace, setup: Setup.With(asResolutionCall: true));
 
             ContainerManager.SetContainer(container);
 
@@ -69,7 +63,7 @@ namespace SFF.Infra.Web.Startup
 
             //container.RegisterMany(sTypes, reuse: Reuse.Singleton);
             //container.RegisterMany(cTypes, serviceTypeCondition: type => type.IsClass, reuse: Reuse.Scoped);
-            container.RegisterMany(iTypes, serviceTypeCondition: type => type.IsInterface, reuse: Reuse.Scoped);
+            container.RegisterMany(iTypes, serviceTypeCondition: type => type.IsInterface, reuse: Reuse.Scoped, setup: Setup.With(asResolutionCall: true));
 
             return container;
         }

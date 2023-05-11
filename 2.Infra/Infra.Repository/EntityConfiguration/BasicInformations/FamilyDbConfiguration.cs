@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SFF.Infra.Repository.Entities.Administration;
+using SFF.Infra.Repository.Entities.BasicInformations;
 
 namespace SFF.Infra.Repository.EntityConfiguration.Administration
 {
-    public class UserDbConfiguration : IEntityTypeConfiguration<User>
+    public class FamilyDbConfiguration : IEntityTypeConfiguration<Family>
     {
-        public virtual void Configure(EntityTypeBuilder<User> builder)
+        public virtual void Configure(EntityTypeBuilder<Family> builder)
         {
-            builder.ToTable("usuario", "public");
+            builder.ToTable("familia", "public");
             builder.HasKey(t => t.id).HasName("id");
-            builder.Property(x => x.nome).HasColumnName("nome").IsRequired();
-            builder.Property(x => x.login).HasColumnName("login").IsRequired();
-            builder.Property(x => x.administrator).HasColumnName("administrator").IsRequired();
+            builder.Property(x => x.descricao).HasColumnName("descricao").IsRequired();
             builder.Property(x => x.desativado).HasColumnName("desativado").IsRequired();
             //builder.Property(x => x.createdTime).HasColumnName("hora_criacao").IsRequired();
             //builder.Property(x => x.updatedTime).HasColumnName("hora_atualizacao").IsRequired();
