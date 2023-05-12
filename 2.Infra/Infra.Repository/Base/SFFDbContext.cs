@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using SFF.Infra.Repository.EntityConfiguration.Administration;
 
 namespace SFF.Infra.Repository.Base
@@ -73,22 +71,6 @@ namespace SFF.Infra.Repository.Base
             base.OnConfiguring(OptionsBuilder);
         }
 
-
-        public static SFFDbContext GetInstance(IConfiguration configuration)
-        {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            var optionsBuilder = new DbContextOptionsBuilder<SFFDbContext>();
-
-
-            optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
-            optionsBuilder.EnableSensitiveDataLogging();
-
-            optionsBuilder.UseNpgsql(connectionString);
-
-            return new SFFDbContext(optionsBuilder.Options);
-
-
-        }
     }
 
 }

@@ -364,4 +364,4 @@ FodyWeavers.xsd
 
 
 # logs do sistema
-*.log
+log*.txt
