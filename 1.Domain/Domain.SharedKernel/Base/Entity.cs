@@ -18,7 +18,7 @@ namespace SFF.Domain.SharedKernel
         private readonly List<Event> _domainEvents = new List<Event>();
 
         [JsonIgnore]
-        public ICollection<Event> DomainEvents => _domainEvents;
+        public List<Event> DomainEvents => _domainEvents;
 
         public void AddEvent(Event @event)
         {

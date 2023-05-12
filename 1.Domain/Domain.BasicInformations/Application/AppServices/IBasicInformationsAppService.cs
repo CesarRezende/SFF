@@ -1,5 +1,6 @@
 ﻿using SFF.Domain.BasicInformations.Application.Queriables;
 using SFF.Domain.SharedKernel.Base;
+using SFF.Infra.Core.CQRS.Interfaces;
 
 namespace SFF.Domain.BasicInformations.Application
 {
@@ -13,15 +14,9 @@ namespace SFF.Domain.BasicInformations.Application
 
 
         #region Family
-        //Task<Result> InsertFamilyAsync(
-        //    string fullName,
-        //    string phoneNumber,
-        //    int retailerId,
-        //    int routingNumber,
-        //    long bankAccountNumber,
-        //    string code,
-        //    string encryptedCode
-        //    );
+        Task<CommandResult> InsertFamilyAsync(
+            string description
+            );
 
         //Task<Result> UpdateFamilyPhoneNumberAsync(
         //    Guid userId,

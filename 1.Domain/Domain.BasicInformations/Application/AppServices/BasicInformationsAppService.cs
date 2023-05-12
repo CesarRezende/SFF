@@ -2,16 +2,18 @@
 using Microsoft.Extensions.Logging;
 using SFF.Domain.Administration.Core.Repositories;
 using SFF.Domain.BasicInformations.Application.Queriables;
+using SFF.Domain.BasicInformations.Core.Aggregates.FamilyAggregate;
+using SFF.Infra.Core.CQRS.Implementation;
 using SFF.Infra.Core.CQRS.Interfaces;
+using SFF.SharedKernel.Helpers;
 
 namespace SFF.Domain.BasicInformations.Application.AppServices
 {
-    public class BasicInformationsAppService : IBasicInformationsAppService
+    public class BasicInformationsAppService : BaseAppService,  IBasicInformationsAppService
     {
 
-        private readonly IEventDispatcher _dispatcher;
         private readonly IFamilyRepository _familyRepository;
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         private readonly ILogger<BasicInformationsAppService> _logger;
 
         public IBasicInformationsQueryable Query { get; }
@@ -26,7 +28,6 @@ namespace SFF.Domain.BasicInformations.Application.AppServices
 
             Query = queryable != null ? queryable : throw new ArgumentNullException("queryable");
             _familyRepository = familyRepository != null ? familyRepository : throw new ArgumentNullException("familyRepository");
-            _dispatcher = dispatcher != null ? dispatcher : throw new ArgumentNullException("dispatcher");
             _logger = logger != null ? logger : throw new ArgumentNullException("logger");
             _configuration = configuration != null ? configuration : throw new ArgumentNullException("configuration");
         }
@@ -41,110 +42,45 @@ namespace SFF.Domain.BasicInformations.Application.AppServices
         #region BasicInformationsAppService
 
         #region Family
-        //public async Task<Result> InsertFamilyAsync(
-        //    string fullName,
-        //    string phoneNumber,
-        //    int retailerId,
-        //    int routingNumber,
-        //    long bankAccountNumber,
-        //    string code,
-        //    string encryptedCode
+        public async Task<CommandResult> InsertFamilyAsync(
+            string description
+            )
+        {
+            try
+            {
 
-        //    )
-        //{
-        //    try
-        //    {
-        //        var result = new Result();
+                if (await _familyRepository.ExiteFamiliaAsync(description.Trim()))
+                    return Result.Failed($"Family {description} já existe");
 
-        //        var isValidationCodeValidOp = await ValidateValidationCodeAsync(code, encryptedCode);
+                var newFamily = Family.CreateFamily(description);
 
-        //        if (!isValidationCodeValidOp.IsValid)
-        //            return new Result().AddErrors(isValidationCodeValidOp.Notifications.ToList());
-
-        //        var isvalidationCodeValid = isValidationCodeValidOp.Data;
-        //        if (isvalidationCodeValid)
-        //        {
-
-        //            //Validar se retailer id existe no sistema da KornerStone
-        //            var retailer = await _kornerstoneRetailerApi.GetRetailerInformation(retailerId);
-
-        //            if (retailer.IsValid)
-        //            {
-        //                var retailerGroup = await _kornerstoneRetailerApi.GetRetailerGroupInformation(retailerId);
-
-        //                if (retailerGroup.IsValid || retailerGroup.IsNotFound)
-        //                {
-        //                    var retailersIds = retailerGroup.Data.Select(x => x.Id);
-
-        //                    var newFamily = Family.CreateFamily(
-        //                        fullName: fullName,
-        //                        phoneNumber: phoneNumber,
-        //                        defaultRetailerId: retailerId,
-        //                        retailersIds: retailersIds,
-        //                        routingNumber: routingNumber,
-        //                        bankAccountNumber: bankAccountNumber
-        //                        );
-
-        //                    _logger.LogDebug($"Family: {newFamily.ToJsonFormat()}");
+                _logger.LogDebug($"Family: {newFamily.ToJsonFormat()}");
 
 
-        //                    if (newFamily.IsValid)
-        //                    {
+                if (newFamily.IsValid)
+                {
 
-        //                        if (await _familyRepository.Exists(newFamily.PhoneNumber.ToInternationalFormat()))
-        //                        {
-        //                            var errorMsg = $"Already existe a family associate to the phone number {phoneNumber}";
-        //                            _logger.LogWarning(errorMsg);
+                    await _familyRepository.InsertAsync(newFamily);
+                    _logger.LogInformation($"Dispatching  family {newFamily.Id} domain events");
+                    await DispatchEvents(newFamily.DomainEvents);
 
-        //                            return result.AddError(MessagesHelper.GetMessage("PhoneAlreadyAssociateToFamilyErrorMsg", phoneNumber));
-        //                        }
+                    _logger.LogInformation($"Family {newFamily.Id} {description} inserted successfully!");
+                }
+                else
+                {
+                    _logger.LogWarning($"Family {newFamily.Id} is invalid!");
+                    _logger.LogWarning(newFamily.Notifications.CreateLogMsg());
+                }
 
-        //                        await _familyRepository.InsertAsync(newFamily);
-        //                        _logger.LogInformation($"Dispatching  family {newFamily.Id} domain events");
-        //                        await _dispatcher.DispatchAll(newFamily.DomainEvents);
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An unexpected error occurred while trying to insert the family", ex);
 
-        //                        _logger.LogInformation($"Family {newFamily.Id} inserted successfully!");
-        //                    }
-        //                    else
-        //                    {
-        //                        _logger.LogWarning($"Family {newFamily.Id} is invalid!");
-        //                        _logger.LogWarning(newFamily.Notifications.CreateLogMsg());
-        //                    }
-
-        //                    return new Result(newFamily.Notifications);
-
-        //                }
-        //                else
-        //                {
-        //                    _logger.LogWarning($"An unexpected error occurred while trying to insert the family");
-        //                    return new Result().AddErrors(retailerGroup.Notifications.ToList());
-        //                }
-        //            }
-        //            else if (retailer.IsNotFound)
-        //            {
-        //                _logger.LogWarning($"Could not find retailer {retailerId}");
-        //                return new Result().SetAsNotFound().AddErrors(retailer.Notifications.ToList());
-        //            }
-        //            else
-        //            {
-        //                _logger.LogWarning($"An unexpected error occurred while trying to insert the family");
-        //                return new Result().AddErrors(retailer.Notifications.ToList());
-        //            }
-        //        }
-        //        else
-        //        {
-        //            _logger.LogWarning($"Validation code is invalid or expired");
-        //            return new Result().AddError(MessagesHelper.GetMessage("CodeInvalidOrExpiredErrorMsg"));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError($"An unexpected error occurred while trying to insert the family");
-        //        _logger.LogError(ex.ToString());
-
-        //        return new Result().SetAsInternalServerError().AddError(MessagesHelper.GetMessage("AnUnexpectedErrorInsertFamilyErrorMsg"));
-        //    }
-        //}
+                throw new Exception($"Ocorreu um erro inesperado ao tentar inserir a familia {description}");
+            }
+        }
 
 
         //public async Task<Result<FamilyAuthInformation>> GetFamilyInformationForAuth(string phoneNumber)

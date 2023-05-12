@@ -1,0 +1,4 @@
+/* SCRIPT DE ATUALIZAÇÃO DO SFF*/
+
+ALTER TABLE FAMILIA ADD COLUMN hora_criacao TimestampTz;
+ALTER TABLE FAMILIA ADD COLUMN hora_atualizacao TimestampTz;

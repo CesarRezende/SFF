@@ -3,7 +3,7 @@
 
     public interface IEntityBase
     {
-        DateTimeOffset createdTime { get; set; }
-        DateTimeOffset? updatedTime { get; set; }
+        DateTime hora_criacao { get; set; }
+        DateTime? hora_atualizacao { get; set; }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using SFF.Infra.Core.CQRS.Interfaces;
 namespace SFF.Infra.Core.Repository
 {
     public interface IUnitOfWork : IDisposable
@@ -11,5 +6,7 @@ namespace SFF.Infra.Core.Repository
         void BeginTransaction();
         void Rollback();
         void Commit();
+
+        Task<CommandResult> RunAsync<TResult>(Func<Task<TResult>> action);
     }
 }

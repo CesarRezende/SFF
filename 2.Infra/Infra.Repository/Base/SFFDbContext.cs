@@ -7,8 +7,9 @@ namespace SFF.Infra.Repository.Base
     {
         public SFFDbContext(DbContextOptions optionsBuilder) : base(optionsBuilder)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
-        
+
         public override int SaveChanges()
         {
             var modifiedEntries = ChangeTracker.Entries().Where(x => x.Entity is IEntityBase && (x.State == EntityState.Added || x.State == EntityState.Modified));
@@ -21,13 +22,13 @@ namespace SFF.Infra.Repository.Base
 
                 if (entry.State == EntityState.Added)
                 {
-                    entity.createdTime = DateTime.Now;
+                    entity.hora_criacao = DateTime.Now;
                     continue;
                 }
 
-                Entry(entity).Property(x => x.createdTime).IsModified = false;
+                Entry(entity).Property(x => x.hora_criacao).IsModified = false;
 
-                entity.updatedTime = DateTime.Now;
+                entity.hora_atualizacao = DateTime.Now;
             }
 
             return base.SaveChanges();
@@ -45,13 +46,13 @@ namespace SFF.Infra.Repository.Base
 
                 if (entry.State == EntityState.Added)
                 {
-                    entity.createdTime = DateTime.Now;
+                    entity.hora_criacao = DateTime.Now;
                     continue;
                 }
 
-                Entry(entity).Property(x => x.createdTime).IsModified = false;
+                Entry(entity).Property(x => x.hora_criacao).IsModified = false;
 
-                entity.updatedTime = DateTime.Now;
+                entity.hora_atualizacao = DateTime.Now;
             }
 
             return base.SaveChangesAsync();

@@ -11,7 +11,7 @@ using db = SFF.Infra.Repository.Entities.BasicInformations;
 namespace SFF.Infra.Repository.Repositories.BasicInformations
 {
 
-    public class FamilyRepository : BaseRepository, IFamilyRepository
+    public class FamilyRepository : BaseEntityRepository<db.Family>, IFamilyRepository
     {
 
         public FamilyRepository(SFFDbContext dbContext, ILogger<FamilyRepository> logger)
@@ -24,10 +24,29 @@ namespace SFF.Infra.Repository.Repositories.BasicInformations
             EF.CompileAsyncQuery((SFFDbContext contexto, long familyId) =>
                 contexto.Family.AsNoTracking().FirstOrDefault(x => x.id == familyId));
 
+        private static readonly Func<SFFDbContext, string, Task<bool>> _existFamily =
+            EF.CompileAsyncQuery((SFFDbContext contexto, string familyDescr) =>
+                contexto.Family.AsNoTracking().Any(x => x.descricao == familyDescr));
+
 
         public Task DeleteAsync(domain.Family entity)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                var family = entity.ToDbEntity();
+                if (_dbContext.Family.Entry(family).State == EntityState.Detached)
+                    _dbContext.Family.Attach(family);
+
+                _dbContext.Family.Remove(family);
+
+                return Task.CompletedTask;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An unexpected error occurred while tring to delete family {entity.Id} from the database");
+                throw;
+            }
         }
 
         public override void Dispose()
@@ -50,6 +69,21 @@ namespace SFF.Infra.Repository.Repositories.BasicInformations
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"An unexpected error occurred while tring to get the family {id} from the database");
+                throw;
+            }
+
+        }
+
+        public async Task<bool> ExiteFamiliaAsync(string description)
+        {
+
+            try
+            {
+                return await _existFamily(_dbContext, description);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An unexpected error occurred while tring to check the family {description} from the database");
                 throw;
             }
 
@@ -80,7 +114,7 @@ namespace SFF.Infra.Repository.Repositories.BasicInformations
         {
 
             var updateFamily = familyUpdated.ToDbEntity();
-            //updateFamily.UpdatedTime = DateTimeOffset.UtcNow;
+            //updateFamily.UpdatedTime = DateTime.UtcNow;
 
             try
             {

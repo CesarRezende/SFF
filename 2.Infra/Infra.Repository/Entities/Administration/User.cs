@@ -15,8 +15,8 @@ namespace SFF.Infra.Repository.Entities.Administration
         public virtual bool desativado { get; set; }
 
 
-        public virtual DateTimeOffset createdTime { get; set; }
-        public virtual DateTimeOffset? updatedTime { get; set; }
+        public virtual DateTime hora_criacao { get; set; }
+        public virtual DateTime? hora_atualizacao { get; set; }
 
         #region RELATIONAL
 

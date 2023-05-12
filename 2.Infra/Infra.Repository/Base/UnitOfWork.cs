@@ -1,7 +1,8 @@
-﻿
-using System.Data;
+﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using SFF.Infra.Core.CQRS.Interfaces;
+using SFF.Infra.Core.CQRS.Models;
 using SFF.Infra.Core.Repository;
 
 namespace SFF.Infra.Repository.Base
@@ -38,6 +39,27 @@ namespace SFF.Infra.Repository.Base
         {
             _transaction?.Dispose();
 
+        }
+
+        public async Task<CommandResult> RunAsync<TResult>(Func<Task<TResult>> action)
+        {
+            try
+            {
+                var result = await action.Invoke() as CommandResult;
+
+                if (result.Success)
+                    Commit();
+                else
+                    Rollback();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Rollback();
+
+                return CommandResult.Invalid(ex.Message);
+            }
         }
     }
 }

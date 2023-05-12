@@ -13,8 +13,8 @@ namespace SFF.Infra.Repository.Entities.BasicInformations
         public virtual string descricao { get; set; }
         public virtual string desativado { get; set; }
 
-        public virtual DateTimeOffset createdTime { get; set; }
-        public virtual DateTimeOffset? updatedTime { get; set; }
+        public virtual DateTime hora_criacao { get; set; }
+        public virtual DateTime? hora_atualizacao { get; set; }
 
         #region RELATIONAL
 

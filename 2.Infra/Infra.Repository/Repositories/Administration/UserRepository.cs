@@ -80,7 +80,7 @@ namespace SFF.Infra.Repository.Repositories.Administration
         {
 
             var updateUser = userUpdated.ToDbEntity();
-            //updateUser.UpdatedTime = DateTimeOffset.UtcNow;
+            //updateUser.UpdatedTime = DateTime.UtcNow;
 
             try
             {

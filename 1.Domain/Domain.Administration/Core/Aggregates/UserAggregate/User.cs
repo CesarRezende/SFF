@@ -17,8 +17,8 @@ namespace SFF.Domain.Administration.Core.Aggregates.UserAggregate
             string login,
             bool administrator,
             bool inactived,
-            DateTimeOffset createdTime,
-            DateTimeOffset? updatedTime
+            DateTime createdTime,
+            DateTime? updatedTime
             ) : base(id, createdTime, updatedTime)
         {
             Login = login;
@@ -40,8 +40,8 @@ namespace SFF.Domain.Administration.Core.Aggregates.UserAggregate
                 name: name,
                 administrator: administrator,
                 inactived: false,
-                createdTime: DateTimeOffset.UtcNow,
-                updatedTime: DateTimeOffset.UtcNow
+                createdTime: DateTime.UtcNow,
+                updatedTime: DateTime.UtcNow
                 );
 
             newUser.AddNotifications(new Contract<Notification>()

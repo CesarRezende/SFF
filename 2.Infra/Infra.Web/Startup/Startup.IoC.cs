@@ -39,6 +39,7 @@ namespace SFF.Infra.Web.Startup
         {
             container = container.AddAssembly();
 
+            container.Register<IUnitOfWork, UnitOfWork>(reuse: Reuse.Scoped, ifAlreadyRegistered: IfAlreadyRegistered.Replace, setup: Setup.With(asResolutionCall: true));
             container.Register<IUnitOfWorkWithTransactionScope, UnitOfWorkWithTransactionScope>(reuse: Reuse.Scoped, ifAlreadyRegistered: IfAlreadyRegistered.Replace, setup: Setup.With(asResolutionCall: true));
 
             container.Register(typeof(IValidator<>), reuse: Reuse.Singleton, made: Made.Of(factoryMethod: FactoryMethod.ConstructorWithResolvableArguments));

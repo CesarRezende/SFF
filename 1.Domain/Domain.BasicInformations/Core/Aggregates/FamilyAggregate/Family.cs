@@ -10,8 +10,8 @@ namespace SFF.Domain.BasicInformations.Core.Aggregates.FamilyAggregate
             long id,
             string description,
             bool inactived,
-            DateTimeOffset createdTime,
-            DateTimeOffset? updatedTime
+            DateTime createdTime,
+            DateTime? updatedTime
             ) : base(id, createdTime, updatedTime)
         {
             Id = id;
@@ -29,8 +29,8 @@ namespace SFF.Domain.BasicInformations.Core.Aggregates.FamilyAggregate
             var newFamily = new Family(default(long),
                 description: description,
                 inactived: false,
-                createdTime: DateTimeOffset.UtcNow,
-                updatedTime: DateTimeOffset.UtcNow
+                createdTime: DateTime.UtcNow,
+                updatedTime: DateTime.UtcNow
                 );
 
             newFamily.AddNotifications(new Contract<Notification>()
@@ -42,8 +42,5 @@ namespace SFF.Domain.BasicInformations.Core.Aggregates.FamilyAggregate
         }
         public string Description { get; private set; }
         public bool Inactived { get; private set; }
-
-        public DateTimeOffset createdTime { get; private set; }
-        public DateTimeOffset? updatedTime { get; private set; }
     }
 }

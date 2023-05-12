@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Commands\" />
-    <Folder Include="Application\Handlers\Commands\" />
     <Folder Include="Application\Handlers\Events\" />
     <Folder Include="Application\Handlers\Models\" />
     <Folder Include="Core\Aggregates\SpendingTypeAggregate\" />
