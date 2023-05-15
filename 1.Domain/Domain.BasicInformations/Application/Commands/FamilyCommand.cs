@@ -1,9 +1,12 @@
-﻿using SFF.Infra.Core.CQRS.Interfaces;
+﻿using Newtonsoft.Json;
+using SFF.Infra.Core.CQRS.Interfaces;
 
 namespace SFF.Domain.BasicInformations.Application.Commands
 {
     public class BaseFamilyCommand : ICommand
     {
+        [System.Text.Json.Serialization.JsonIgnore]
+        [JsonIgnore]
         public Guid UId { get; set; } = Guid.NewGuid();
 
         public string Description { get; set; }
@@ -18,7 +21,6 @@ namespace SFF.Domain.BasicInformations.Application.Commands
     public class UpdateFamilyCommand : BaseFamilyCommand
     {
         public long Id { get; set; }
-        public bool Inactived { get; set; }
     }
 
 

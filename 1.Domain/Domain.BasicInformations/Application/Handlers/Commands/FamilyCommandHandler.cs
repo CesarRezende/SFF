@@ -32,9 +32,7 @@ namespace SFF.Domain.BasicInformations.Application.Handlers.Commands
         public async Task<CommandResult> Execute(UpdateFamilyCommand command)
         {
             return await _unitOfWork.RunAsync<CommandResult>(async () => {
-
-                return Result.Success();
-
+                return await _basicInformationAppService.UpdateFamilyAsync(command.Id , command.Description);
             });
         }
         public async Task<CommandResult> Execute(DeleteFamilyCommand command)

@@ -18,8 +18,6 @@ namespace SFF.Infra.Repository.MapExtension.BasicInformations
                 id = family.Id,
                 descricao = family.Description,
                 desativado = family.Inactived,
-                //CreatedTime = family.CreatedTime,
-                //UpdatedTime = family.UpdatedTime,
             };
 
             return dbEntity;
@@ -35,8 +33,8 @@ namespace SFF.Infra.Repository.MapExtension.BasicInformations
                 id: family.id,
                 description: family.descricao,
                 inactived: family.desativado,
-                createdTime: DateTime.Now, //family.createdTime,
-                updatedTime: null   //family.updatedTime
+                createdTime: family.hora_criacao,
+                updatedTime: family?.hora_atualizacao
                 ) ;;
 
             return domainEntity;

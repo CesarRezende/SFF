@@ -18,6 +18,10 @@ namespace SFF.Domain.BasicInformations.Application
             string description
             );
 
+        Task<CommandResult> UpdateFamilyAsync(
+            long id,
+            string newDescription
+            );
         //Task<Result> UpdateFamilyPhoneNumberAsync(
         //    Guid userId,
         //    string newPhoneNumber,

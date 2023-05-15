@@ -40,6 +40,22 @@ namespace SFF.Domain.BasicInformations.Core.Aggregates.FamilyAggregate
 
             return newFamily;
         }
+
+
+        public void UpdateFamily(
+            string description
+            )
+
+        {
+            Description = description;
+
+            AddNotifications(new Contract<Notification>()
+               .Requires()
+               .IsNotNullOrEmpty(Description, "Family.Description", "Descrição da familia não deve ser nulo")
+               .IsGreaterOrEqualsThan(Description.Length, 3, "Family.Description", "Descrição da familia não deve conter menos de 3 caractes"));
+
+        }
+
         public string Description { get; private set; }
         public bool Inactived { get; private set; }
     }

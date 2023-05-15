@@ -50,7 +50,10 @@ namespace SFF.Domain.BasicInformations.Application.AppServices
             {
 
                 if (await _familyRepository.ExiteFamiliaAsync(description.Trim()))
-                    return Result.Failed($"Family {description} já existe");
+                {
+                    _logger.LogError($"Family {description} already exist!");
+                    return Result.Failed($"Familia {description} já existe");
+                }
 
                 var newFamily = Family.CreateFamily(description);
 
@@ -77,11 +80,56 @@ namespace SFF.Domain.BasicInformations.Application.AppServices
             catch (Exception ex)
             {
                 _logger.LogError($"An unexpected error occurred while trying to insert the family", ex);
-
-                throw new Exception($"Ocorreu um erro inesperado ao tentar inserir a familia {description}");
+                return Result.Failed($"Ocorreu um erro inesperado ao tentar inserir a familia {description}");
             }
         }
 
+
+        public async Task<CommandResult> UpdateFamilyAsync(
+            long id,
+            string newDescription
+            )
+        {
+
+            var familyOldDescription = string.Empty;
+
+            try
+            {
+                var family = await _familyRepository.GetByIdAsync(id);
+                familyOldDescription = family.Description;
+
+                _logger.LogDebug($"Family: {family.ToJsonFormat()}");
+
+                if (family == null)
+                {
+                    _logger.LogError($"Family {id} wasa not found!");
+                    return Result.Failed($"Family de {id} não foi encontrada");
+                }
+
+                family.UpdateFamily(newDescription);
+
+                if (family.IsValid)
+                {
+                    await _familyRepository.UpdateAsync(family);
+                    _logger.LogInformation($"Dispatching  family {family.Id} domain events");
+                    await DispatchEvents(family.DomainEvents);
+
+                    _logger.LogInformation($"Family {family.Id} {newDescription} inserted successfully!");
+                }
+                else
+                {
+                    _logger.LogWarning($"Family {family.Id} is invalid!");
+                    _logger.LogWarning(family.Notifications.CreateLogMsg());
+                }
+
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An unexpected error occurred while trying to insert the family", ex);
+                return Result.Failed($"Ocorreu um erro inesperado ao tentar atualizar a descrição da familia {familyOldDescription} para {newDescription}");
+            }
+        }
 
         //public async Task<Result<FamilyAuthInformation>> GetFamilyInformationForAuth(string phoneNumber)
         //{

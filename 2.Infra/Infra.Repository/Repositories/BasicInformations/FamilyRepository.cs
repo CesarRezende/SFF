@@ -114,13 +114,13 @@ namespace SFF.Infra.Repository.Repositories.BasicInformations
         {
 
             var updateFamily = familyUpdated.ToDbEntity();
-            //updateFamily.UpdatedTime = DateTime.UtcNow;
 
             try
             {
                 var currentFamily = await _dbContext.Family.FirstAsync(x => x.id == updateFamily.id);
-
-                //currentFamily.Active = updateFamily.Active;
+                currentFamily.descricao = updateFamily.descricao;
+                currentFamily.desativado = updateFamily.desativado;
+                currentFamily.hora_atualizacao = DateTime.Now;
 
                 await _dbContext.SaveChangesAsync();
             }
