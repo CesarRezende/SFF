@@ -19,7 +19,8 @@ namespace SFF.Infra.Repository.Repositories.BasicInformations
         {
             try
             {
-                var familiesInfo = await _dbContext.Family
+                var familiesInfo = await _dbContext.Family.
+                    Where(x => !x.desativado)
                     .Select(x => new FamilyQueryResult
                     {
                         Id = x.id,

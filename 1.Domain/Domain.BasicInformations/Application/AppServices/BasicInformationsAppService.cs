@@ -96,14 +96,14 @@ namespace SFF.Domain.BasicInformations.Application.AppServices
             try
             {
                 var family = await _familyRepository.GetByIdAsync(id);
-                familyOldDescription = family.Description;
+                familyOldDescription = family?.Description;
 
                 _logger.LogDebug($"Family: {family.ToJsonFormat()}");
 
                 if (family == null)
                 {
                     _logger.LogError($"Family {id} wasa not found!");
-                    return Result.Failed($"Family de {id} não foi encontrada");
+                    return Result.Failed($"Family de Id {id} não foi encontrada");
                 }
 
                 family.UpdateFamily(newDescription);

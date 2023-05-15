@@ -8,6 +8,7 @@ namespace SFF.Domain.Administration.Application.Queriables.QueryResult
         public string Login { get; set; }
         public string Name { get; set; }
         public bool Administrator { get; set; }
+
         public bool Inactivated { get; set; }
     }
 }
