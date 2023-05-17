@@ -22,15 +22,10 @@ namespace SFF.Domain.BasicInformations.Application
             long id,
             string newDescription
             );
-        //Task<Result> UpdateFamilyPhoneNumberAsync(
-        //    Guid userId,
-        //    string newPhoneNumber,
-        //    string code,
-        //    string encryptedCode
-        //    );
 
-        //Task<Result<Family>> GetFamilyByIdAsync(Guid id);
-
+        Task<CommandResult> InactivateFamilyAsync(
+            long id
+            );
 
 
         #endregion Family

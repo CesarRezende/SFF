@@ -56,6 +56,12 @@ namespace SFF.Domain.BasicInformations.Core.Aggregates.FamilyAggregate
 
         }
 
+
+        public void InactivateFamily()
+        {
+            Inactived = true;
+        }
+
         public string Description { get; private set; }
         public bool Inactived { get; private set; }
     }
