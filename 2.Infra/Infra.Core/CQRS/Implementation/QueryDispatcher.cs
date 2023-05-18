@@ -1,6 +1,7 @@
 ﻿using DryIoc;
 using Microsoft.Extensions.Logging;
 using SFF.Infra.Core.CQRS.Interfaces;
+using SFF.Infra.Core.Validations.Interface;
 
 namespace SFF.Infra.Core.CQRS.Implementation
 {

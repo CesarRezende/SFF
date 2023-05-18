@@ -1,4 +1,6 @@
-﻿namespace SFF.Infra.Core.CQRS.Interfaces
+﻿using SFF.Infra.Core.Validations.Interface;
+
+namespace SFF.Infra.Core.CQRS.Interfaces
 {
     public interface ICommandValidator<T> where T : ICommand
     {

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using SFF.Domain.Administration.Application.Queriables;
 using SFF.Infra.Core.CQRS.Interfaces;
+using SFF.Infra.Core.CQRS.Models;
 
 namespace SFF.Domain.Administration.Application.AppServices
 {
@@ -190,14 +191,65 @@ namespace SFF.Domain.Administration.Application.AppServices
 
         #endregion User
 
+
         #region TokenAuth
 
+        //public async Task<Result> SaveAuthTokenAsync(string securityStamp, Guid userId, AppLanguage language, string expoToken)
+        //{
+        //    var result = new Result();
 
-        //public async Task<Result<Auth>> Authenticate(string phoneNumber, string code, string encryptedCode, string expoToken)
+        //    try
+        //    {
+        //        var authToken = await _tokenAuthRepository.GetByIdAsync(userId);
+
+        //        if (authToken is null)
+        //        {
+        //            var newTokenAuth = TokenAuth.CreateTokenAuth(securityStamp: securityStamp, userId: userId, MessagesHelper.GetLanguageAcronym(language), expoToken);
+
+        //            _logger.LogDebug($"TokenAuth: {newTokenAuth.ToJsonFormat()}");
+
+        //            if (newTokenAuth.IsValid)
+        //            {
+        //                await _tokenAuthRepository.InsertAsync(newTokenAuth);
+        //                _logger.LogInformation($"Dispatching  tokenAuth {newTokenAuth.Id} domain events");
+        //                await _dispatcher.DispatchAll(newTokenAuth.DomainEvents);
+
+        //                _logger.LogInformation($"TokenAuth {newTokenAuth.Id} inserted successfully!");
+        //            }
+        //            else
+        //            {
+        //                _logger.LogWarning($"TokenAuth {newTokenAuth.Id} is invalid!");
+        //                _logger.LogWarning(newTokenAuth.Notifications.CreateLogMsg());
+        //            }
+
+        //            return new Result(newTokenAuth.Notifications);
+        //        }
+
+        //        authToken.GenerateUpdateTokenAuth(securityStamp, MessagesHelper.GetLanguageAcronym(language), expoToken);
+
+        //        if (authToken.IsValid)
+        //        {
+        //            await _tokenAuthRepository.UpdateAsync(authToken);
+        //            await _dispatcher.DispatchAll(authToken.DomainEvents);
+        //        }
+
+        //        return new Result(authToken.Notifications);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"An unexpected error occurred while trying to insert or update the token of user with id { userId }");
+        //        _logger.LogError(ex.ToString());
+
+        //        return new Result().SetAsInternalServerError().AddError(MessagesHelper.GetMessage("AnUnexpectedErrorInsertTokenErrorMsg", userId.ToString()));
+        //    }
+        //}
+
+        //public async Task<Result<Auth>> Authenticate(string login, string password, string expoToken)
         //{
         //    try
         //    {
-        //        var isValidationCodeValidOP = await ValidateValidationCodeAsync(code, encryptedCode);
+        //        var isValidationCodeValidOP = await ValidateCredentialsAsync(login, password);
 
         //        if (!isValidationCodeValidOP.IsValid)
         //            return new Result<Auth>().AddErrors(isValidationCodeValidOP.Notifications.ToList());
@@ -206,7 +258,7 @@ namespace SFF.Domain.Administration.Application.AppServices
         //        if (isValidationCodeValid)
         //        {
 
-        //            var phoneSuccssedparsed = phoneNumber.TryParseToPhoneNumber(out var phone);
+        //            var phoneSuccssedparsed = login.TryParseToPhoneNumber(out var phone);
 
         //            if (!phoneSuccssedparsed)
         //            {
@@ -220,7 +272,7 @@ namespace SFF.Domain.Administration.Application.AppServices
         //            {
         //                if (userAuthInformation.IsNotFound)
         //                {
-        //                    return new Result<Auth>().SetAsNotFound().AddError(MessagesHelper.GetMessage("NotFoundUserInfoByPhoneErrorMsg", phoneNumber));
+        //                    return new Result<Auth>().SetAsNotFound().AddError(MessagesHelper.GetMessage("NotFoundUserInfoByPhoneErrorMsg", login));
         //                }
         //                else
         //                {
@@ -299,9 +351,10 @@ namespace SFF.Domain.Administration.Application.AppServices
         //    }
         //}
 
-        #endregion
+
 
         #endregion
 
+        #endregion AdministrationAppService
     }
 }

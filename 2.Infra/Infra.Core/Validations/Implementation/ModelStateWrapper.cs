@@ -1,8 +1,9 @@
 ﻿using SFF.Infra.Core.CQRS.Interfaces;
 using Flunt.Notifications;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using SFF.Infra.Core.Validations.Interface;
 
-namespace SFF.Infra.Core.CQRS.Implementation
+namespace SFF.Infra.Core.Validations.Implementation
 {
     public class ModelStateWrapper : IValidationDictionary
     {

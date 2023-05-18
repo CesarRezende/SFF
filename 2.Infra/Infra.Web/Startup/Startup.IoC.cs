@@ -4,11 +4,10 @@ using DryIoc;
 using SFF.Infra.IoC;
 using SFF.Infra.Core.Repository;
 using SFF.Infra.Core.Helper;
-using SFF.Infra.Core.CQRS.Interfaces;
-using SFF.Infra.Core.CQRS.Implementation;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFF.Infra.Repository.Base;
-using Microsoft.Extensions.Logging;
+using SFF.Infra.Core.Validations.Implementation;
+using SFF.Infra.Core.Validations.Interface;
 
 namespace SFF.Infra.Web.Startup
 {

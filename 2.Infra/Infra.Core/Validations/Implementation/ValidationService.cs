@@ -1,10 +1,11 @@
 ﻿using DryIoc;
 using Flunt.Notifications;
 using SFF.Infra.Core.CQRS.Interfaces;
+using SFF.Infra.Core.Validations.Interface;
 using SFF.Infra.IoC;
 using System.Diagnostics;
 
-namespace SFF.Infra.Core.CQRS.Implementation
+namespace SFF.Infra.Core.Validations.Implementation
 {
     public class FluntValidationService : IValidationService
     {

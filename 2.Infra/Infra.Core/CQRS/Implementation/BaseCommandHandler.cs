@@ -2,6 +2,7 @@
 using SFF.Infra.IoC;
 using SFF.Infra.Core.CQRS.Interfaces;
 using DryIoc;
+using SFF.Infra.Core.Validations.Interface;
 
 namespace SFF.Infra.Core.CQRS.Implementation
 {

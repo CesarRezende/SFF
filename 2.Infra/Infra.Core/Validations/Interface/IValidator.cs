@@ -1,6 +1,6 @@
 ﻿using Flunt.Notifications;
 
-namespace SFF.Infra.Core.CQRS.Interfaces
+namespace SFF.Infra.Core.Validations.Interface
 {
     public interface IValidator<in T>
     {
