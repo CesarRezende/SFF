@@ -73,6 +73,7 @@ namespace SFF.Domain.BasicInformations.Application.AppServices
                 {
                     _logger.LogWarning($"Family {newFamily.Id} is invalid!");
                     _logger.LogWarning(newFamily.Notifications.CreateLogMsg());
+                    return Result.Failed($"Ocorreu um erro inesperado ao tentar inserir a familia. {newFamily.Notifications.CreateLogMsg()}");
                 }
 
                 return Result.Success();

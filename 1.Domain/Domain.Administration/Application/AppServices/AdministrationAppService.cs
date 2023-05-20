@@ -1,12 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SFF.Domain.Administration.Application.Queriables;
+using SFF.Domain.Administration.Core.Aggregates.UserAggregate;
+using SFF.Infra.Core.CQRS.Implementation;
 using SFF.Infra.Core.CQRS.Interfaces;
-using SFF.Infra.Core.CQRS.Models;
+using SFF.SharedKernel.Helpers;
 
 namespace SFF.Domain.Administration.Application.AppServices
 {
-    public class AdministrationAppService : IAdministrationAppService
+    public class AdministrationAppService : BaseAppService, IAdministrationAppService
     {
 
         private readonly IEventDispatcher _dispatcher;
@@ -192,7 +194,28 @@ namespace SFF.Domain.Administration.Application.AppServices
         #endregion User
 
 
-        #region TokenAuth
+        #region Auth
+
+        public async Task<CommandResult> GeneratePasswordAsync(string plainPassword)
+        {
+            try
+            {
+
+                _logger.LogInformation($"Generating new password Hash");
+                var newPassword = Password.CreatePassword(plainPassword);
+
+                if (!newPassword.IsValid)
+                    return Result.Failed($"Ocorreu um erro inesperado ao tentar criar uma nova senha. {newPassword.Notifications.CreateLogMsg()}");
+
+                return Result.Success(newPassword.PasswordHash);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An unexpected error occurred while trying to generate a new password", ex);
+                return Result.Failed($"Ocorreu um erro inesperado ao tentar criar uma nova senha");
+            }
+        }
+
 
         //public async Task<Result> SaveAuthTokenAsync(string securityStamp, Guid userId, AppLanguage language, string expoToken)
         //{

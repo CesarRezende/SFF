@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
-using SFF.Infra.Core.CQRS.Interfaces;
+﻿using SFF.Infra.Core.CQRS.Implementation;
 
 namespace SFF.Domain.BasicInformations.Application.Commands
 {
-    public class BaseFamilyCommand : ICommand
+    public class BaseFamilyCommand : CommandBase
     {
-        [System.Text.Json.Serialization.JsonIgnore]
-        [JsonIgnore]
-        public Guid UId { get; set; } = Guid.NewGuid();
 
         public string Description { get; set; }
 
@@ -24,9 +20,8 @@ namespace SFF.Domain.BasicInformations.Application.Commands
     }
 
 
-    public class DeleteFamilyCommand : ICommand
+    public class DeleteFamilyCommand : CommandBase
     {
-        public Guid UId { get; set; } = Guid.NewGuid();
         public long Id { get; set; }
     }
 
