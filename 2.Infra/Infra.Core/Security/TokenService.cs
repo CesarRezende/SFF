@@ -18,14 +18,14 @@ namespace EaiBrasil.Kornerstone.KashApp.Infra.Security.Token.Implementations
             _configuration = configuration;
         }
 
-        public string GenerateToken(string securityStamp, UserAuthInformation user = null, List<Claim> claims = null)
+        public string GenerateToken(UserAuthInformation user, List<Claim> claims = null)
         {
             dynamic token;
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration[$"Security:TokenParameters:SecretKey"]);
             string expirate = _configuration[$"Security:TokenParameters:ExpirationInMinutes"];
 
-            if (claims == null)
+            if (claims == null || !claims.Any())
             {
 
                 var userData = JsonConvert.SerializeObject(
@@ -45,7 +45,6 @@ namespace EaiBrasil.Kornerstone.KashApp.Infra.Security.Token.Implementations
                         new Claim(ClaimTypes.PrimarySid, user.Id.ToString()),
                         new Claim(ClaimTypes.Name, user.Login),
                         new Claim(ClaimTypes.UserData, userData),
-                        new Claim("SecurityStamp", securityStamp),
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(expirate)),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

@@ -1,5 +1,6 @@
 ﻿using SFF.Domain.Administration.Application.Queriables;
 using SFF.Domain.SharedKernel.Base;
+using SFF.Infra.Core.CQRS.Interfaces;
 
 namespace SFF.Domain.Administration.Application
 {
@@ -36,8 +37,8 @@ namespace SFF.Domain.Administration.Application
 
         #endregion User
 
-        #region TokenAuth
-
+        #region Auth
+        Task<CommandResult> GeneratePasswordAsync(string plainPassword);
         //Task<Result<Auth>> Authenticate(string phoneNumber, string code, string encryptedCode, string expoToken);
         //Task<Result<Auth>> RefreshToken(string token, string refreshToken, string expoToken);
 

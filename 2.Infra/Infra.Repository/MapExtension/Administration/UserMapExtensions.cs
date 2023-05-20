@@ -17,9 +17,12 @@ namespace SFF.Infra.Repository.MapExtension.Administration
             {
                 id = user.Id,
                 login = user.Login,
+                senha = user.Password.PasswordHash,
                 nome = user.Name,
                 administrator = user.Administrator,
                 desativado = user.Inactived,
+                numero_falhas_login = user.LoginFailTimes,
+                bloqueado_ate =  user.BlockedUntil,
                 //CreatedTime = user.CreatedTime,
                 //UpdatedTime = user.UpdatedTime,
             };
@@ -37,8 +40,11 @@ namespace SFF.Infra.Repository.MapExtension.Administration
                 id: user.id,
                 name: user.nome,
                 login: user.login,
+                password:new domain.Password(user.senha),
                 administrator: user.administrator,
                 inactived: user.desativado,
+                loginFailTimes: user.numero_falhas_login,
+                blockedUntil: user.bloqueado_ate,
                 createdTime: user.hora_criacao,
                 updatedTime: user.hora_atualizacao
                 );

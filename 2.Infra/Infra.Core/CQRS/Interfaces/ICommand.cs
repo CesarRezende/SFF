@@ -1,9 +1,11 @@
 ﻿using SFF.Infra.Core.CQRS.Models;
+using System.Text.Json.Serialization;
 
 namespace SFF.Infra.Core.CQRS.Interfaces
 {
     public interface ICommand
     {
+        [JsonIgnore]
         Guid UId { get; }
     }
 

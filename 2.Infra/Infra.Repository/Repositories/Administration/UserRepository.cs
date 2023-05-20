@@ -80,13 +80,17 @@ namespace SFF.Infra.Repository.Repositories.Administration
         {
 
             var updateUser = userUpdated.ToDbEntity();
-            //updateUser.UpdatedTime = DateTime.UtcNow;
 
             try
             {
                 var currentUser = await _dbContext.User.FirstAsync(x => x.id == updateUser.id);
 
-                //currentUser.Active = updateUser.Active;
+                currentUser.senha = updateUser.senha;
+                currentUser.nome = updateUser.nome;
+                currentUser.administrator = updateUser.administrator;
+                currentUser.desativado = updateUser.desativado;
+                currentUser.numero_falhas_login = updateUser.numero_falhas_login;
+                currentUser.bloqueado_ate = updateUser.bloqueado_ate;
 
                 await _dbContext.SaveChangesAsync();
             }

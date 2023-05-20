@@ -11,9 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Handlers\Commands\" />
     <Folder Include="Application\Handlers\Events\" />
-    <Folder Include="Application\Commands\" />
     <Folder Include="Core\ValueObjects\" />
   </ItemGroup>
 

@@ -2,7 +2,9 @@ using DryIoc.Microsoft.DependencyInjection;
 using SFF.Infra.IoC;
 using Serilog;
 using SFF.Infra.Web.Startup;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,24 @@ builder.Host.UseServiceProviderFactory(new DryIocServiceProviderFactory(Containe
 
 var container = ContainerManager.GetContainer().AddDbConfigurations(builder.Configuration).AddDefaults();
 
+
+//Add Authentication JWT
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration[$"Security:TokenParameters:SecretKey"])),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        SaveSigninToken = true
+    };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,6 +54,7 @@ app.UseResponseCompression();
 app.UseHttpsRedirection();
 app.UseHttpLogging();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
