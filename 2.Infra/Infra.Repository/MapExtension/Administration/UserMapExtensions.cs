@@ -23,8 +23,6 @@ namespace SFF.Infra.Repository.MapExtension.Administration
                 desativado = user.Inactived,
                 numero_falhas_login = user.LoginFailTimes,
                 bloqueado_ate =  user.BlockedUntil,
-                //CreatedTime = user.CreatedTime,
-                //UpdatedTime = user.UpdatedTime,
             };
 
             return dbEntity;

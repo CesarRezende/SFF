@@ -4,6 +4,6 @@ namespace SFF.Domain.Administration.Application.Commands
 {
     public class GeneratePassawordCommand : CommandBase
     {
-        public string PlainPasword { get; set; }
+        public string PlainPassword { get; set; }
     }
 }

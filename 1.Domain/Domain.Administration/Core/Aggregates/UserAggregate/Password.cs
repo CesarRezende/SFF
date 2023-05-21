@@ -1,7 +1,7 @@
 ﻿using Flunt.Notifications;
 using Flunt.Validations;
 using SFF.Domain.SharedKernel;
-using SFF.Infra.Core.Security.Models;
+using SFF.Infra.Core.Security;
 
 namespace SFF.Domain.Administration.Core.Aggregates.UserAggregate
 {

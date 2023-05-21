@@ -8,7 +8,8 @@ using SFF.Infra.Core.Repository;
 namespace SFF.Domain.Administration.Application.Handlers.Commands
 {
     public class AuthCommandHandler : BaseCommandHandler,
-        ICommandHandler<GeneratePassawordCommand>
+        ICommandHandler<GeneratePassawordCommand>,
+        ICommandHandler<AuthenticateCommand>
     {
 
         private readonly IAdministrationAppService _administrationAppService;
@@ -23,7 +24,17 @@ namespace SFF.Domain.Administration.Application.Handlers.Commands
 
         public async Task<CommandResult> Execute(GeneratePassawordCommand command)
         {
-            return await _administrationAppService.GeneratePasswordAsync(command.PlainPasword);
+            return await _administrationAppService.GeneratePasswordAsync(command.PlainPassword);
+        }
+
+        public async Task<CommandResult> Execute(AuthenticateCommand command)
+        {
+            return await _unitOfWork.RunAsync<CommandResult>(async () => {
+
+                return await _administrationAppService.Authenticate(command.Login, command.Password);
+
+            });
+            
         }
 
     }

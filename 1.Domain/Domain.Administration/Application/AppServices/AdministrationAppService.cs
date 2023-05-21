@@ -1,10 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using EaiBrasil.Kornerstone.KashApp.Infra.Security.Token;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SFF.Domain.Administration.Application.Queriables;
 using SFF.Domain.Administration.Core.Aggregates.UserAggregate;
+using SFF.Domain.Administration.Core.Repositories;
 using SFF.Infra.Core.CQRS.Implementation;
 using SFF.Infra.Core.CQRS.Interfaces;
 using SFF.Infra.Core.CQRS.Models;
+using SFF.Infra.Core.Security.Models;
 using SFF.SharedKernel.Helpers;
 
 namespace SFF.Domain.Administration.Application.AppServices
@@ -13,7 +16,8 @@ namespace SFF.Domain.Administration.Application.AppServices
     {
 
         private readonly IEventDispatcher _dispatcher;
-        //private readonly IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly ITokenService _tokenService;
         private IConfiguration _configuration;
         private readonly ILogger<AdministrationAppService> _logger;
 
@@ -21,14 +25,16 @@ namespace SFF.Domain.Administration.Application.AppServices
 
         public AdministrationAppService(
             IAdministrationQueryable queryable,
-            //IUserRepository userRepository,
+            IUserRepository userRepository,
+            ITokenService tokenService,
             IEventDispatcher dispatcher,
             ILogger<AdministrationAppService> logger,
             IConfiguration configuration)
         {
 
             Query = queryable != null ? queryable : throw new ArgumentNullException("queryable");
-            //_userRepository = userRepository != null ? userRepository : throw new ArgumentNullException("userRepository");
+            _userRepository = userRepository != null ? userRepository : throw new ArgumentNullException("userRepository");
+            _tokenService = tokenService != null ? tokenService : throw new ArgumentNullException("tokenService");
             _dispatcher = dispatcher != null ? dispatcher : throw new ArgumentNullException("dispatcher");
             _logger = logger != null ? logger : throw new ArgumentNullException("logger");
             _configuration = configuration != null ? configuration : throw new ArgumentNullException("configuration");
@@ -149,51 +155,7 @@ namespace SFF.Domain.Administration.Application.AppServices
         //    }
         //}
 
-
-        //public async Task<Result<UserAuthInformation>> GetUserInformationForAuth(string phoneNumber)
-        //{
-        //    var userAuthInformationDTO = new Result<UserAuthInformation>();
-
-        //    userAuthInformationDTO.Data = await Query.GetUserAuthInformation(phoneNumber);
-
-        //    if (userAuthInformationDTO.Data is null)
-        //    {
-        //        _logger.LogWarning($"User not found");
-        //        return new Result<UserAuthInformation>().AddError(MessagesHelper.GetMessage("UserNotFoundMSg")).SetAsNotFound();
-        //    }
-
-        //    var userLanguage = await Query.GetUserLanguage(userAuthInformationDTO.Data.Id);
-        //    userAuthInformationDTO.Data.Language = userLanguage == null ? "en-US" : userLanguage;
-
-        //    var retailerInfo = await _kornerstoneRetailerApi.GetRetailerInformation(userAuthInformationDTO.Data.DefaultRetailer.Id);
-
-        //    if (retailerInfo.IsValid && !retailerInfo.IsNotFound)
-        //    {
-        //        userAuthInformationDTO.Data.DefaultRetailer.Name = retailerInfo?.Data?.Name;
-        //        userAuthInformationDTO.Data.DefaultRetailer.StateId = retailerInfo.Data?.Address?.StateId;
-
-        //        var retailerGroup = await _kornerstoneRetailerApi.GetRetailerGroupInformation(userAuthInformationDTO.Data.DefaultRetailer.Id);
-
-        //        if (retailerGroup.Succeded && retailerGroup.Data.Count() != 0)
-        //            foreach (var retailer in userAuthInformationDTO.Data.Retailers)
-        //            {
-        //                retailer.Name = retailerGroup.Data.FirstOrDefault(x => x.Id == retailer.Id)?.Name;
-        //            }
-
-
-        //        userAuthInformationDTO.Data.RaffleConfig = await Query.GetRaffleConfigInfo(retailerInfo.Data.Address.StateId);
-
-        //        return userAuthInformationDTO;
-        //    }
-        //    else
-        //    {
-        //        _logger.LogWarning($"An unexpected error occurred while trying to get user information for auth");
-        //        return new Result<UserAuthInformation>().SetAsInternalServerError().AddErrors(retailerInfo.Notifications.ToList());
-        //    }
-        //}
-
         #endregion User
-
 
         #region Auth
 
@@ -218,126 +180,47 @@ namespace SFF.Domain.Administration.Application.AppServices
         }
 
 
-        //public async Task<Result> SaveAuthTokenAsync(string securityStamp, Guid userId, AppLanguage language, string expoToken)
-        //{
-        //    var result = new Result();
 
-        //    try
-        //    {
-        //        var authToken = await _tokenAuthRepository.GetByIdAsync(userId);
+        public async Task<CommandResult> Authenticate(string login, string password)
+        {
+            try
+            {
+                _logger.LogInformation($"Looking for user {login}");
+                var user = await _userRepository.GetByLoginAsync(login);
 
-        //        if (authToken is null)
-        //        {
-        //            var newTokenAuth = TokenAuth.CreateTokenAuth(securityStamp: securityStamp, userId: userId, MessagesHelper.GetLanguageAcronym(language), expoToken);
+                if (user == null) { 
+                    _logger.LogError($"User {login} not found!");
+                    return Result.Failed($"Usuario {login} não foi encontrado!");
+                }
 
-        //            _logger.LogDebug($"TokenAuth: {newTokenAuth.ToJsonFormat()}");
 
-        //            if (newTokenAuth.IsValid)
-        //            {
-        //                await _tokenAuthRepository.InsertAsync(newTokenAuth);
-        //                _logger.LogInformation($"Dispatching  tokenAuth {newTokenAuth.Id} domain events");
-        //                await _dispatcher.DispatchAll(newTokenAuth.DomainEvents);
+                _logger.LogInformation($"Autenticando usuario {login}");
+                var isValidCredentials = user.AutenticateUser(password);
 
-        //                _logger.LogInformation($"TokenAuth {newTokenAuth.Id} inserted successfully!");
-        //            }
-        //            else
-        //            {
-        //                _logger.LogWarning($"TokenAuth {newTokenAuth.Id} is invalid!");
-        //                _logger.LogWarning(newTokenAuth.Notifications.CreateLogMsg());
-        //            }
 
-        //            return new Result(newTokenAuth.Notifications);
-        //        }
+                _logger.LogInformation($"Atualiza usuario {login}");
+                await _userRepository.UpdateAsync(user);
 
-        //        authToken.GenerateUpdateTokenAuth(securityStamp, MessagesHelper.GetLanguageAcronym(language), expoToken);
+                if (!isValidCredentials.IsValid) {
+                    _logger.LogInformation($"Autenticação do usuario {login} falhou {isValidCredentials.Notifications.CreateLogMsg()}");
+                    return Result.Failed(isValidCredentials.Notifications.CreateLogMsg());
+                }
 
-        //        if (authToken.IsValid)
-        //        {
-        //            await _tokenAuthRepository.UpdateAsync(authToken);
-        //            await _dispatcher.DispatchAll(authToken.DomainEvents);
-        //        }
 
-        //        return new Result(authToken.Notifications);
+                _logger.LogInformation($"Gerando token JWT para o usuario {login}");
+                var authInformation = _tokenService.GenerateJWTToken(user: new UserAuthInformation(
+                    id: user.Id,
+                    login: user.Login
+                    ));
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError($"An unexpected error occurred while trying to insert or update the token of user with id { userId }");
-        //        _logger.LogError(ex.ToString());
-
-        //        return new Result().SetAsInternalServerError().AddError(MessagesHelper.GetMessage("AnUnexpectedErrorInsertTokenErrorMsg", userId.ToString()));
-        //    }
-        //}
-
-        //public async Task<Result<Auth>> Authenticate(string login, string password, string expoToken)
-        //{
-        //    try
-        //    {
-        //        var isValidationCodeValidOP = await ValidateCredentialsAsync(login, password);
-
-        //        if (!isValidationCodeValidOP.IsValid)
-        //            return new Result<Auth>().AddErrors(isValidationCodeValidOP.Notifications.ToList());
-
-        //        var isValidationCodeValid = isValidationCodeValidOP.Data;
-        //        if (isValidationCodeValid)
-        //        {
-
-        //            var phoneSuccssedparsed = login.TryParseToPhoneNumber(out var phone);
-
-        //            if (!phoneSuccssedparsed)
-        //            {
-        //                _logger.LogWarning($"PhoneNumber is invalid");
-        //                return new Result<Auth>().AddError(MessagesHelper.GetMessage("PhoneNumberNotValidErrorMsg"));
-        //            }
-
-        //            var userAuthInformation = await GetUserInformationForAuth(phone.ToInternationalFormat());
-
-        //            if (!userAuthInformation.Succeded)
-        //            {
-        //                if (userAuthInformation.IsNotFound)
-        //                {
-        //                    return new Result<Auth>().SetAsNotFound().AddError(MessagesHelper.GetMessage("NotFoundUserInfoByPhoneErrorMsg", login));
-        //                }
-        //                else
-        //                {
-        //                    return new Result<Auth>().AddError(MessagesHelper.GetMessage("AnUnexpectedErrorLoginErrorMsg"));
-        //                }
-        //            }
-
-        //            var refreshToken = _tokenService.GenerateRefreshToken();
-        //            var token = _tokenService.GenerateToken(refreshToken, language: userAuthInformation.Data.Language, user: userAuthInformation.Data);
-        //            var retailerID = userAuthInformation.Data.DefaultRetailer.Id.ToString();
-        //            var fullName = userAuthInformation.Data.FullName;
-
-        //            var authData = new Auth(
-        //                token: token,
-        //                refreshToken: refreshToken,
-        //                retailerID: retailerID,
-        //                fullName: fullName
-        //                );
-
-        //            var saveToken = await SaveAuthTokenAsync(authData.RefreshToken, userAuthInformation.Data.Id, MessagesHelper.GetAppLanguage(userAuthInformation.Data.Language), expoToken);
-
-        //            if (!saveToken.IsValid)
-        //            {
-        //                return new Result<Auth>().AddErrors(saveToken.Notifications.Select(x => x.Message));
-        //            }
-
-        //            return new Result<Auth>(authData);
-        //        }
-        //        else
-        //        {
-        //            _logger.LogWarning($"Validation code is invalid or is expired");
-        //            return new Result<Auth>().AddError(MessagesHelper.GetMessage("CodeInvalidOrExpiredErrorMsg"));
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "An unexpected error occurred during the login");
-        //        return new Result<Auth>().SetAsInternalServerError().AddError(MessagesHelper.GetMessage("AnUnexpectedErrorLoginErrorMsg"));
-        //    }
-        //}
+                return Result.Success(authInformation);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred during the login");
+                return Result.Failed("Ocorreu um erro inesperado ao tentar efetuar o login");
+            }
+        }
 
         //public async Task<Result<Auth>> RefreshToken(string token, string refreshToken, string expoToken)
         //{

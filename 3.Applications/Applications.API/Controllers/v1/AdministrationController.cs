@@ -8,7 +8,7 @@ using SFF.Infra.Core.CQRS.Interfaces;
 namespace SFF.Applications.API.Controllers.v1
 {
     [ApiController]
-    [Route("v1/[controller]")]
+    [Route("v1/administration")]
     public class AdministrationController : BaseController
     {
 
@@ -20,8 +20,8 @@ namespace SFF.Applications.API.Controllers.v1
         }
 
 
+
         [HttpGet]
-        [AllowAnonymous]
         [Route("user/all")]
         public async Task<IEnumerable<UserQueryResult>> GetAllUsers()
         {
@@ -31,9 +31,16 @@ namespace SFF.Applications.API.Controllers.v1
 
 
         [HttpPost]
-        [AllowAnonymous]
         [Route("auth/generate-password")]
         public async Task<IActionResult> InsertFamily([FromBody] GeneratePassawordCommand command)
+        {
+            return Response(await CommandDispatcher.Dispatch(command));
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("auth/authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateCommand command)
         {
             return Response(await CommandDispatcher.Dispatch(command));
         }

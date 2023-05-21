@@ -5,5 +5,6 @@ namespace SFF.Domain.Administration.Core.Repositories
 {
     public  interface IUserRepository: IRepository<domain.User>
     {
+        Task<domain.User> GetByLoginAsync(string login);
     }
 }

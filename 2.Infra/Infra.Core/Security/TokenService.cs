@@ -12,18 +12,35 @@ namespace EaiBrasil.Kornerstone.KashApp.Infra.Security.Token.Implementations
     public class TokenService : ITokenService
     {
         private IConfiguration _configuration { get; }
-
+        private static int EXPIRATION_IN_MINUTES { get; set; }
+        private static int REFRESH_TOKEN_EXPIRATION_IN_MINUTES { get; set; }
+        private static byte[] SECRET_KEY { get; set; }
         public TokenService(IConfiguration configuration)
         {
             _configuration = configuration;
+            EXPIRATION_IN_MINUTES = Convert.ToInt32(_configuration[$"Security:TokenParameters:ExpirationInMinutes"]);
+            EXPIRATION_IN_MINUTES = Convert.ToInt32(_configuration[$"Security:TokenParameters:RefreshTokenExpirationInMinutes"]);
+            SECRET_KEY = Encoding.ASCII.GetBytes(_configuration[$"Security:TokenParameters:SecretKey"]);
         }
 
-        public string GenerateToken(UserAuthInformation user, List<Claim> claims = null)
+        public AuthInformation GenerateJWTToken(UserAuthInformation user, List<Claim> claims = null) 
+        {
+            var acessToken = GenerateAccessToken(user, claims);
+            var refreshToken = GenerateRefreshToken();
+
+            return AuthInformation.CreateAuthInformation(
+                accessToken: acessToken,
+                expiresIn: (EXPIRATION_IN_MINUTES * 60),
+                refresToken: refreshToken,
+                refresTokenExpiresIn: (REFRESH_TOKEN_EXPIRATION_IN_MINUTES * 60)
+                );
+        }
+
+        private string GenerateAccessToken(UserAuthInformation user, List<Claim> claims = null)
         {
             dynamic token;
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration[$"Security:TokenParameters:SecretKey"]);
-            string expirate = _configuration[$"Security:TokenParameters:ExpirationInMinutes"];
+            
 
             if (claims == null || !claims.Any())
             {
@@ -46,8 +63,8 @@ namespace EaiBrasil.Kornerstone.KashApp.Infra.Security.Token.Implementations
                         new Claim(ClaimTypes.Name, user.Login),
                         new Claim(ClaimTypes.UserData, userData),
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(expirate)),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    Expires = DateTime.UtcNow.AddMinutes(EXPIRATION_IN_MINUTES),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(SECRET_KEY), SecurityAlgorithms.HmacSha256Signature)
                 };
 
                 token = tokenHandler.CreateToken(tokenDescriptor);
@@ -58,8 +75,8 @@ namespace EaiBrasil.Kornerstone.KashApp.Infra.Security.Token.Implementations
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(expirate)),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    Expires = DateTime.UtcNow.AddMinutes(EXPIRATION_IN_MINUTES),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(SECRET_KEY), SecurityAlgorithms.HmacSha256Signature)
                 };
 
                 token = tokenHandler.CreateToken(tokenDescriptor);

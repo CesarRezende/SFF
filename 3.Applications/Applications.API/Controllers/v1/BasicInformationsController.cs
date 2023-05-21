@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFF.Domain.BasicInformations.Application.Commands;
 using SFF.Domain.BasicInformations.Application.Queriables.Queries;
@@ -8,7 +7,7 @@ using SFF.Infra.Core.CQRS.Interfaces;
 namespace SFF.Applications.API.Controllers.v1
 {
     [ApiController]
-    [Route("v1/[controller]")]
+    [Route("v1/basic-informations")]
     public class BasicInformationsController : BaseController
     {
 
@@ -22,7 +21,6 @@ namespace SFF.Applications.API.Controllers.v1
 
         #region Family
         [HttpGet]
-        [AllowAnonymous]
         [Route("family/all")]
         public async Task<IEnumerable<FamilyQueryResult>> GetAllFamilies()
         {
@@ -31,7 +29,6 @@ namespace SFF.Applications.API.Controllers.v1
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [Route("family")]
         public async Task<IActionResult> InsertFamily([FromBody] InsertFamilyCommand command)
         {
@@ -39,7 +36,6 @@ namespace SFF.Applications.API.Controllers.v1
         }
 
         [HttpPut]
-        [AllowAnonymous]
         [Route("family")]
         public async Task<IActionResult> UptadeFamily([FromBody] UpdateFamilyCommand command)
         {
@@ -47,7 +43,6 @@ namespace SFF.Applications.API.Controllers.v1
         }
 
         [HttpDelete]
-        [AllowAnonymous]
         [Route("family")]
         public async Task<IActionResult> UptadeFamily([FromBody] DeleteFamilyCommand command)
         {

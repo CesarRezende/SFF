@@ -3,12 +3,15 @@
 
     public class UserAuthInformation
     {
-        public Guid Id { get; set; }
-        public string Login { get; set; }
-        public string PasswordHash { get; set; }
-        public DateTimeOffset CreatedTime { get; set; }
-        public bool Active { get; set; }
-        public string Language { get; set; }
+
+        public UserAuthInformation(long id, string login)
+        {
+            Id = id;
+            Login = login;
+        }
+
+        public long Id { get; private set; }
+        public string Login { get; private set; }
 
     }
 }

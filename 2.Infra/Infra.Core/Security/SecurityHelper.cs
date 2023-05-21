@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace SFF.Infra.Core.Security.Models
+namespace SFF.Infra.Core.Security
 {
     public static class SecurityHelper
     {

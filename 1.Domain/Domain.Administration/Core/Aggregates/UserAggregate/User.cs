@@ -76,9 +76,10 @@ namespace SFF.Domain.Administration.Core.Aggregates.UserAggregate
         {
 
             var result = new Result();
+            var bloquedErrorMessage = $"Usuario esta bloqueado porque excedeu o limit de tentativas de login de {LOGIN_FAIL_TIMES_LIMIT} vezes.\r\n Aguarde {BLOCKED_UNIT_TIME_IN_MINUTES} minutos e depois tente novamente";
 
             if (BlockedUntil.HasValue && BlockedUntil > DateTime.Now)
-                result.AddNotification("", $"Usuario esta bloqueado porque excedeu o limit de tentativas de login de {LOGIN_FAIL_TIMES_LIMIT} vezes.\r\n Aguarde {BLOCKED_UNIT_TIME_IN_MINUTES} minutos e depois tente novamente");
+                result.AddNotification("", bloquedErrorMessage);
 
             if (!result.IsValid)
                 return result;
@@ -92,13 +93,16 @@ namespace SFF.Domain.Administration.Core.Aggregates.UserAggregate
             }
             else 
             {
-                LoginFailTimes = LoginFailTimes++;
+                LoginFailTimes += 1;
 
                 if (LoginFailTimes >= LOGIN_FAIL_TIMES_LIMIT)
+                {
                     BlockedUntil = DateTime.Now.AddMinutes(BLOCKED_UNIT_TIME_IN_MINUTES);
+                    result.AddNotification("", bloquedErrorMessage);
+                }
 
                 var leftAttempts = LOGIN_FAIL_TIMES_LIMIT - LoginFailTimes ?? 0;
-                result.AddNotification("", $"Senha é invalida, você tem mais {leftAttempts} !");
+                result.AddNotification("", $"Senha é invalida, você tem mais {leftAttempts} tentativas!");
 
             }
 

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFF.Infra.Repository.Base;
 using SFF.Infra.Core.Validations.Implementation;
 using SFF.Infra.Core.Validations.Interface;
+using EaiBrasil.Kornerstone.KashApp.Infra.Security.Token;
+using EaiBrasil.Kornerstone.KashApp.Infra.Security.Token.Implementations;
 
 namespace SFF.Infra.Web.Startup
 {
@@ -40,7 +42,8 @@ namespace SFF.Infra.Web.Startup
 
             container.Register<IUnitOfWork, UnitOfWork>(reuse: Reuse.Scoped, ifAlreadyRegistered: IfAlreadyRegistered.Replace, setup: Setup.With(asResolutionCall: true));
             container.Register<IUnitOfWorkWithTransactionScope, UnitOfWorkWithTransactionScope>(reuse: Reuse.Scoped, ifAlreadyRegistered: IfAlreadyRegistered.Replace, setup: Setup.With(asResolutionCall: true));
-
+            container.Register<ITokenService, TokenService>(reuse: Reuse.Scoped, ifAlreadyRegistered: IfAlreadyRegistered.Replace, setup: Setup.With(asResolutionCall: true));
+            
             container.Register(typeof(IValidator<>), reuse: Reuse.Singleton, made: Made.Of(factoryMethod: FactoryMethod.ConstructorWithResolvableArguments));
             container.RegisterDelegate<IValidationDictionary>(r => { return new ModelStateWrapper(new ModelStateDictionary()); }, reuse: Reuse.Scoped, ifAlreadyRegistered: IfAlreadyRegistered.Replace, setup: Setup.With(asResolutionCall: true));
 

@@ -24,6 +24,11 @@ namespace SFF.Infra.Repository.Repositories.Administration
             EF.CompileAsyncQuery((SFFDbContext contexto, long userId) =>
                 contexto.User.AsNoTracking().FirstOrDefault(x => x.id == userId));
 
+        private static readonly Func<SFFDbContext, string, Task<db.User>> _findUserByLogin =
+            EF.CompileAsyncQuery((SFFDbContext contexto, string login) =>
+                contexto.User.AsNoTracking().FirstOrDefault(x => x.login == login));
+
+
 
         public Task DeleteAsync(domain.User entity)
         {
@@ -50,6 +55,25 @@ namespace SFF.Infra.Repository.Repositories.Administration
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"An unexpected error occurred while tring to get the user {id} from the database");
+                throw;
+            }
+
+        }
+
+        public async Task<domain.User> GetByLoginAsync(string login)
+        {
+
+            try
+            {
+                var user = await _findUserByLogin(_dbContext, login);
+
+                if (user is null) return null;
+
+                return user.ToDomain();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An unexpected error occurred while tring to get the user {login} from the database");
                 throw;
             }
 

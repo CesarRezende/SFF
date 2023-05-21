@@ -5,8 +5,7 @@ namespace EaiBrasil.Kornerstone.KashApp.Infra.Security.Token
 {
     public interface ITokenService
     {
-        string GenerateToken(UserAuthInformation user, List<Claim> claims = null);
-        string GenerateRefreshToken();
+        AuthInformation GenerateJWTToken(UserAuthInformation user, List<Claim> claims = null);
         ClaimsPrincipal GetPrincipalFromToken(string token);
     }
 }
