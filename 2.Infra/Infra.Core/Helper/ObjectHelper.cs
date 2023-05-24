@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SFF.SharedKernel.Helpers
+namespace SFF.Infra.Core.Helper
 {
     public static class ObjectHelper
     {

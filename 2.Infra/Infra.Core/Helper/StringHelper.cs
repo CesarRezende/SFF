@@ -167,6 +167,27 @@ namespace SFF.Infra.Core.Helper
             }
         }
 
+
+        public static string JustNumber(this string doc)
+        {
+            if (!string.IsNullOrEmpty(doc))
+                return doc.Where(char.IsNumber).Aggregate(string.Empty, (current, item) => current + item);
+
+            return string.Empty;
+        }
+
+
+        public static string Repeat(this string doc, int times)
+        {
+            var reapeatValue = doc;
+            for (int i = 0; i < times; i++)
+            {
+                doc += reapeatValue;
+            }
+
+            return doc;
+        }
+
         public static string FormatCNPJ(this string CNPJ)
         {
             return string.IsNullOrEmpty(CNPJ) ? "" : Convert.ToUInt64(CNPJ).ToString(@"00\.000\.000\/0000\-00");

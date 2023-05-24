@@ -5,6 +5,7 @@ using SFF.Domain.BasicInformations.Application.Queriables;
 using SFF.Domain.BasicInformations.Core.Aggregates.FamilyAggregate;
 using SFF.Infra.Core.CQRS.Implementation;
 using SFF.Infra.Core.CQRS.Interfaces;
+using SFF.Infra.Core.Helper;
 using SFF.SharedKernel.Helpers;
 
 namespace SFF.Domain.BasicInformations.Application.AppServices

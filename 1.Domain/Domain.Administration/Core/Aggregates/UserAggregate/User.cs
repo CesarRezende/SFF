@@ -65,7 +65,12 @@ namespace SFF.Domain.Administration.Core.Aggregates.UserAggregate
 
             newUser.AddNotifications(new Contract<Notification>()
                .Requires()
-               .IsNotNullOrEmpty(newUser.Name, "User.Name", "Nome não deve ser nulo"));
+               .IsNotNullOrEmpty(newUser.Login, "User.Login", "Login não deve ser vazio")
+               .IsGreaterOrEqualsThan(newUser.Login.Length, 3, "User.Login", "Login deve ter ao menos 3 caracteres")
+               .IsNotNullOrEmpty(newUser.Name, "User.Name", "Nome não deve ser vazio")
+               .IsGreaterOrEqualsThan(newUser.Name.Length, 3, "User.Name", "Nome deve ter ao menos 3 caracteres")
+               .IsNotNullOrEmpty(plainPassword, "User.Password", "Senha não deve ser vazia")
+               .IsGreaterOrEqualsThan(plainPassword, 6, "User.Password", "Nome deve ter ao menos 6 caracteres"));
 
             newUser.AddNotifications(password.Notifications);
 

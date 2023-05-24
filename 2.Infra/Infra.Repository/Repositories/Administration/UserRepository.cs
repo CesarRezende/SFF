@@ -3,10 +3,10 @@ using Microsoft.Extensions.Logging;
 using SFF.Domain.Administration.Core.Repositories;
 using SFF.Infra.Repository.Base;
 using SFF.Infra.Repository.MapExtension.Administration;
-using SFF.SharedKernel.Helpers;
 
 using domain = SFF.Domain.Administration.Core.Aggregates.UserAggregate;
 using db = SFF.Infra.Repository.Entities.Administration;
+using SFF.Infra.Core.Helper;
 
 namespace SFF.Infra.Repository.Repositories.Administration
 {

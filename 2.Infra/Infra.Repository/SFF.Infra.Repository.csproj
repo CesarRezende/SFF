@@ -31,4 +31,8 @@
     <Folder Include="Repositories\Financial\" />
   </ItemGroup>
 
+  <ItemGroup>
+		  <None Include="Scripts\Script SFFsql.sql" />
+  </ItemGroup>
+
 </Project>

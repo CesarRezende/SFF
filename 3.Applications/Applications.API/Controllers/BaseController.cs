@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using Flunt.Notifications;
-using SFF.Infra.IoC;
+﻿using Flunt.Notifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SFF.Infra.Core.CQRS.Interfaces;
-using SFF.SharedKernel.Helpers;
-using DryIoc;
+using SFF.Infra.Core.Helper;
 
 namespace SFF.Applications.API.Controllers
 {
