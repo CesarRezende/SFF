@@ -1,4 +1,4 @@
-﻿using Flunt.Notifications;
+﻿using SFF.Infra.Core.Validations.Models;
 
 namespace SFF.Infra.Core.Validations.Interface
 {
@@ -8,7 +8,7 @@ namespace SFF.Infra.Core.Validations.Interface
 
         void AddModelError(string key, string errorMessage);
 
-        void AddModelError(IReadOnlyCollection<Notification> erros);
+        void AddModelError(ValidationResult erros);
 
         bool IsValid { get; }
 

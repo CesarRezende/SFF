@@ -1,7 +1,7 @@
 ﻿using DryIoc;
-using Flunt.Notifications;
 using SFF.Infra.Core.CQRS.Interfaces;
 using SFF.Infra.Core.Validations.Interface;
+using SFF.Infra.Core.Validations.Models;
 using SFF.Infra.IoC;
 using System.Diagnostics;
 
@@ -9,7 +9,7 @@ namespace SFF.Infra.Core.Validations.Implementation
 {
     public class FluntValidationService : IValidationService
     {
-        public IReadOnlyCollection<Notification> Validate<T>(T entity) where T : ICommand
+        public ValidationResult Validate<T>(T entity) where T : ICommand
         {
             try
             {
@@ -30,7 +30,7 @@ namespace SFF.Infra.Core.Validations.Implementation
             return null;
         }
 
-        public IReadOnlyCollection<Notification> ValidateQuery<T>(T entity) where T : IQuery
+        public ValidationResult ValidateQuery<T>(T entity) where T : IQuery
         {
             try
             {

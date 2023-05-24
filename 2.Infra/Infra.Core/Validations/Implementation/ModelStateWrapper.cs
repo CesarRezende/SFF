@@ -1,7 +1,6 @@
-﻿using SFF.Infra.Core.CQRS.Interfaces;
-using Flunt.Notifications;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFF.Infra.Core.Validations.Interface;
+using SFF.Infra.Core.Validations.Models;
 
 namespace SFF.Infra.Core.Validations.Implementation
 {
@@ -21,10 +20,10 @@ namespace SFF.Infra.Core.Validations.Implementation
             _modelState.AddModelError("", errorMessage);
         }
 
-        public void AddModelError(IReadOnlyCollection<Notification> validationResults)
+        public void AddModelError(ValidationResult validationResults)
         {
-            if (validationResults != null && validationResults.Any())
-                foreach (var error in validationResults)
+            if (validationResults != null && !validationResults.IsValid)
+                foreach (var error in validationResults.Notifications)
                     AddModelError(error.Key, error.Message);
         }
 
