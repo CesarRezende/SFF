@@ -9,7 +9,8 @@ namespace SFF.Domain.Administration.Application.Handlers.Commands
 {
     public class AuthCommandHandler : BaseCommandHandler,
         ICommandHandler<GeneratePassawordCommand>,
-        ICommandHandler<AuthenticateCommand>
+        ICommandHandler<AuthenticateCommand>,
+        ICommandHandler<RefreshTokenCommand>
     {
 
         private readonly IAdministrationAppService _administrationAppService;
@@ -37,5 +38,13 @@ namespace SFF.Domain.Administration.Application.Handlers.Commands
             
         }
 
+        public async Task<CommandResult> Execute(RefreshTokenCommand command)
+        {
+            return await _unitOfWork.RunAsync<CommandResult>(async () => {
+
+                return await _administrationAppService.RefreshToken(command.RefreshToken);
+
+            });
+        }
     }
 }

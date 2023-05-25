@@ -29,3 +29,5 @@ CREATE TABLE sessao(
 ALTER SEQUENCE sessao_id_seq
 OWNED BY sessao.id;
 
+ALTER TABLE sessao ADD COLUMN usuario_id bigint;
+ALTER TABLE sessao ADD CONSTRAINT FK_sessao_usuario FOREIGN KEY(usuario_id) REFERENCES usuario(id);

@@ -16,6 +16,9 @@ namespace SFF.Infra.Repository.EntityConfiguration.Administration
             builder.Property(x => x.desativado).HasColumnName("desativado").IsRequired();
             builder.Property(x => x.hora_criacao).HasColumnName("hora_criacao").IsRequired();
             builder.Property(x => x.hora_atualizacao).HasColumnName("hora_atualizacao");
+
+
+            builder.HasOne(x => x.sessao).WithOne(x => x.User).HasForeignKey<Session>(x => x.usuario_id);
         }
     }
 }

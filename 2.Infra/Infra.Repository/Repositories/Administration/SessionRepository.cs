@@ -22,11 +22,11 @@ namespace SFF.Infra.Repository.Repositories.Administration
 
         private static readonly Func<SFFDbContext, long, Task<db.Session>> _findSession =
             EF.CompileAsyncQuery((SFFDbContext contexto, long sessionId) =>
-                contexto.Session.AsNoTracking().FirstOrDefault(x => x.id == sessionId));
+                contexto.Session.Include(x => x.User).AsNoTracking().FirstOrDefault(x => x.id == sessionId));
 
         private static readonly Func<SFFDbContext, string, Task<db.Session>> _findRefreshTokenAsync =
             EF.CompileAsyncQuery((SFFDbContext contexto, string refreshToken) =>
-                contexto.Session.AsNoTracking().FirstOrDefault(x => x.refresh_token == refreshToken));
+                contexto.Session.Include(x => x.User).AsNoTracking().FirstOrDefault(x => x.refresh_token == refreshToken));
 
 
 

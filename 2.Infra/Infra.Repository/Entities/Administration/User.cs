@@ -23,6 +23,7 @@ namespace SFF.Infra.Repository.Entities.Administration
 
         #region RELATIONAL
 
+        public virtual Session sessao { get; set; }
 
         #endregion
     }

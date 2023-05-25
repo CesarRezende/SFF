@@ -60,7 +60,8 @@ namespace EaiBrasil.Kornerstone.KashApp.Infra.Security.Token.Implementations
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                         new Claim(ClaimTypes.PrimarySid, user.Id.ToString()),
-                        new Claim(ClaimTypes.Name, user.Login),
+                        new Claim("login", user.Login),
+                        new Claim(ClaimTypes.Name, user.Name),
                         new Claim(ClaimTypes.UserData, userData),
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(EXPIRATION_IN_MINUTES),

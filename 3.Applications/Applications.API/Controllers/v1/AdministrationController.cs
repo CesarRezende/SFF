@@ -46,5 +46,13 @@ namespace SFF.Applications.API.Controllers.v1
 
             return Response(await CommandDispatcher.Dispatch(command));
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("auth/refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCommand command)
+        {
+            return Response(await CommandDispatcher.Dispatch(command));
+        }
     }
 }

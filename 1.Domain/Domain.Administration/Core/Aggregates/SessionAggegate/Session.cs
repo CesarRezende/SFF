@@ -1,6 +1,8 @@
 ﻿using Flunt.Notifications;
 using Flunt.Validations;
 using SFF.Domain.SharedKernel.Base;
+using SFF.Domain.SharedKernel.Entities;
+using SFF.Infra.Core.Validations.Models;
 
 namespace SFF.Domain.Administration.Core.Aggregates.SessionAggegate
 {
@@ -13,8 +15,11 @@ namespace SFF.Domain.Administration.Core.Aggregates.SessionAggegate
         public RefreshToken RefreshToken { get; private set; }
         public bool IsExpired { get { return ExpireTime < DateTime.Now; } }
 
-        public Session(
+        public UserBasicInfo User { get; private set; }
+
+    public Session(
             long id,
+            UserBasicInfo user,
             IPAddress ipAddress,
             DateTime expireTime,
             RefreshToken refreshToken,
@@ -22,6 +27,7 @@ namespace SFF.Domain.Administration.Core.Aggregates.SessionAggegate
             DateTime? updatedTime)
             : base(id, createdTime, updatedTime)
         {
+            User = user;
             IPAddress = ipAddress;
             ExpireTime = expireTime;
             RefreshToken = refreshToken;
@@ -30,6 +36,7 @@ namespace SFF.Domain.Administration.Core.Aggregates.SessionAggegate
 
         public static Session CreateSession(
             string ip,
+            long userId,
             DateTime expireTime,
             string refreshToken,
             DateTime refreshTokenExpireTime)
@@ -38,7 +45,8 @@ namespace SFF.Domain.Administration.Core.Aggregates.SessionAggegate
             var newToken =  RefreshToken.CreateRefreshToken(refreshToken, refreshTokenExpireTime);
             var ipAddress =  IPAddress.CreateIPAddress(ip);
             var newSession = new Session(
-                id: 0, 
+                id: 0,
+                user: new UserBasicInfo(userId),
                 ipAddress: ipAddress,
                 expireTime:expireTime,
                 refreshToken:newToken,
@@ -56,10 +64,20 @@ namespace SFF.Domain.Administration.Core.Aggregates.SessionAggegate
         }
 
 
-        public void UpdateRefreshToken(string newRefreshToken, DateTime refreshTokenExpireTime)
+        public void UpdateSession(DateTime expireTime, string newRefreshToken, DateTime refreshTokenExpireTime)
         {
+            ExpireTime = expireTime;
             RefreshToken.Update(newRefreshToken, refreshTokenExpireTime);
             AddNotifications(RefreshToken.Notifications);
+        }
+
+        public ValidationResult ValidateSession() {
+            var validateResult = new ValidationResult();
+
+            if (IsExpired || RefreshToken.IsExpired)
+                validateResult.AddNotification("Session.Expired", $"Refresh token invalido ou expirado!");
+
+            return validateResult;
         }
 
     }

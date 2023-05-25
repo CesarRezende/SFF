@@ -1,6 +1,7 @@
 ﻿using SFF.Domain.Administration.Core.Aggregates.SessionAggegate;
 using db = SFF.Infra.Repository.Entities.Administration;
 using domain = SFF.Domain.Administration.Core.Aggregates.SessionAggegate;
+using ske = SFF.Domain.SharedKernel.Entities;
 
 namespace SFF.Infra.Repository.MapExtension.Administration
 {
@@ -23,6 +24,7 @@ namespace SFF.Infra.Repository.MapExtension.Administration
                 data_expiracao_refresh_token = Session.RefreshToken.ExpireTime,
                 hora_criacao = Session.CreatedTime,
                 hora_atualizacao = Session.UpdatedTime,
+                usuario_id = Session.User.Id,
             };
 
             return dbEntity;
@@ -35,6 +37,7 @@ namespace SFF.Infra.Repository.MapExtension.Administration
 
             var domainEntity = new domain.Session(
                 id: Session.id,
+                user: new ske.UserBasicInfo(Session.User.id, Session.User.login, Session.User.nome, Session.User.administrator),
                 ipAddress: new IPAddress(Session.ip),
                 expireTime: Session.data_expiracao,
                 refreshToken: new RefreshToken(Session.refresh_token, Session.data_expiracao_refresh_token),

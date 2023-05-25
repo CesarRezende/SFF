@@ -7,7 +7,6 @@ using SFF.Domain.Administration.Core.Aggregates.UserAggregate;
 using SFF.Domain.Administration.Core.Repositories;
 using SFF.Infra.Core.CQRS.Implementation;
 using SFF.Infra.Core.CQRS.Interfaces;
-using SFF.Infra.Core.CQRS.Models;
 using SFF.Infra.Core.Security.Models;
 using SFF.SharedKernel.Helpers;
 
@@ -51,110 +50,7 @@ namespace SFF.Domain.Administration.Application.AppServices
         #region AdministrationAppService
 
         #region User
-        //public async Task<Result> InsertUserAsync(
-        //    string fullName,
-        //    string phoneNumber,
-        //    int retailerId,
-        //    int routingNumber,
-        //    long bankAccountNumber,
-        //    string code,
-        //    string encryptedCode
-
-        //    )
-        //{
-        //    try
-        //    {
-        //        var result = new Result();
-
-        //        var isValidationCodeValidOp = await ValidateValidationCodeAsync(code, encryptedCode);
-
-        //        if (!isValidationCodeValidOp.IsValid)
-        //            return new Result().AddErrors(isValidationCodeValidOp.Notifications.ToList());
-
-        //        var isvalidationCodeValid = isValidationCodeValidOp.Data;
-        //        if (isvalidationCodeValid)
-        //        {
-
-        //            //Validar se retailer id existe no sistema da KornerStone
-        //            var retailer = await _kornerstoneRetailerApi.GetRetailerInformation(retailerId);
-
-        //            if (retailer.IsValid)
-        //            {
-        //                var retailerGroup = await _kornerstoneRetailerApi.GetRetailerGroupInformation(retailerId);
-
-        //                if (retailerGroup.IsValid || retailerGroup.IsNotFound)
-        //                {
-        //                    var retailersIds = retailerGroup.Data.Select(x => x.Id);
-
-        //                    var newUser = User.CreateUser(
-        //                        fullName: fullName,
-        //                        phoneNumber: phoneNumber,
-        //                        defaultRetailerId: retailerId,
-        //                        retailersIds: retailersIds,
-        //                        routingNumber: routingNumber,
-        //                        bankAccountNumber: bankAccountNumber
-        //                        );
-
-        //                    _logger.LogDebug($"User: {newUser.ToJsonFormat()}");
-
-
-        //                    if (newUser.IsValid)
-        //                    {
-
-        //                        if (await _userRepository.Exists(newUser.PhoneNumber.ToInternationalFormat()))
-        //                        {
-        //                            var errorMsg = $"Already existe a user associate to the phone number {phoneNumber}";
-        //                            _logger.LogWarning(errorMsg);
-
-        //                            return result.AddError(MessagesHelper.GetMessage("PhoneAlreadyAssociateToUserErrorMsg", phoneNumber));
-        //                        }
-
-        //                        await _userRepository.InsertAsync(newUser);
-        //                        _logger.LogInformation($"Dispatching  user {newUser.Id} domain events");
-        //                        await _dispatcher.DispatchAll(newUser.DomainEvents);
-
-        //                        _logger.LogInformation($"User {newUser.Id} inserted successfully!");
-        //                    }
-        //                    else
-        //                    {
-        //                        _logger.LogWarning($"User {newUser.Id} is invalid!");
-        //                        _logger.LogWarning(newUser.Notifications.CreateLogMsg());
-        //                    }
-
-        //                    return new Result(newUser.Notifications);
-
-        //                }
-        //                else
-        //                {
-        //                    _logger.LogWarning($"An unexpected error occurred while trying to insert the user");
-        //                    return new Result().AddErrors(retailerGroup.Notifications.ToList());
-        //                }
-        //            }
-        //            else if (retailer.IsNotFound)
-        //            {
-        //                _logger.LogWarning($"Could not find retailer {retailerId}");
-        //                return new Result().SetAsNotFound().AddErrors(retailer.Notifications.ToList());
-        //            }
-        //            else
-        //            {
-        //                _logger.LogWarning($"An unexpected error occurred while trying to insert the user");
-        //                return new Result().AddErrors(retailer.Notifications.ToList());
-        //            }
-        //        }
-        //        else
-        //        {
-        //            _logger.LogWarning($"Validation code is invalid or expired");
-        //            return new Result().AddError(MessagesHelper.GetMessage("CodeInvalidOrExpiredErrorMsg"));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError($"An unexpected error occurred while trying to insert the user");
-        //        _logger.LogError(ex.ToString());
-
-        //        return new Result().SetAsInternalServerError().AddError(MessagesHelper.GetMessage("AnUnexpectedErrorInsertUserErrorMsg"));
-        //    }
-        //}
+        
 
         #endregion User
 
@@ -211,16 +107,25 @@ namespace SFF.Domain.Administration.Application.AppServices
                 _logger.LogInformation($"Gerando token JWT para o usuario {login}");
                 var authInformation = _tokenService.GenerateJWTToken(user: new UserAuthInformation(
                     id: user.Id,
-                    login: user.Login
+                    login: user.Login,
+                    name: user.Name
                     ));
 
 
                 var newSession = Session.CreateSession(
                     ip: ip,
+                    userId: user.Id,
                     expireTime: DateTime.Now.AddSeconds(authInformation.expires_in),
                     refreshToken: authInformation.refresh_token,
                     refreshTokenExpireTime: DateTime.Now.AddSeconds(authInformation.expires_in)
                     );
+
+
+                if (!newSession.IsValid)
+                {
+                    _logger.LogInformation($"Autenticação do usuario {login} falhou {newSession.Notifications.CreateLogMsg()}");
+                    return Result.Failed(newSession.Notifications.CreateLogMsg());
+                }
 
                 await _sessionRepository.InsertAsync(newSession);
 
@@ -233,41 +138,56 @@ namespace SFF.Domain.Administration.Application.AppServices
             }
         }
 
-        //public async Task<Result<Auth>> RefreshToken(string token, string refreshToken, string expoToken)
-        //{
-        //    try
-        //    {
-        //        var principal = _tokenService.GetPrincipalFromExpiredToken(token);
-        //        Guid userId = Guid.Parse(principal.FindFirst(ClaimTypes.PrimarySid).Value);
+        public async Task<CommandResult> RefreshToken(string refreshToken)
+        {
+            string userName;
+            try
+            {
+                _logger.LogInformation($"Looking for session by refresshing token {refreshToken}");
+                var session = await _sessionRepository.GetByRefreshTokenAsync(refreshToken);
 
-        //        var getSavedRefreshToken = await this.Query.GetUserToken(userId);
+                if (session == null)
+                {
+                    _logger.LogWarning($"Session was not found!");
+                    return Result.Failed($"Refresh token invalido!");
+                }
+                userName = session.User?.Name;
 
-        //        if (getSavedRefreshToken.SecurityStamp != refreshToken)
-        //        {
-        //            _logger.LogError("An error ocurred in Refresh Endpoint: Invalid refresh token.");
-        //            return new Result<Auth>().AddError(MessagesHelper.GetMessage("InvalidRefreshTokenErrorMsg"));
-        //        }
+                var validationResult = session.ValidateSession();
 
-        //        var newRefreshToken = _tokenService.GenerateRefreshToken();
-        //        var newJwtToken = _tokenService.GenerateToken(newRefreshToken, getSavedRefreshToken.Language, claims: principal.Claims.ToList());
+                if(!validationResult.IsValid)
+                    return Result.Failed(validationResult.Notifications.CreateLogMsg());
 
-        //        var saveToken = await this.SaveAuthTokenAsync(newRefreshToken, userId, MessagesHelper.GetAppLanguage(getSavedRefreshToken.Language), expoToken);
+                _logger.LogInformation($"Generating JWT for session {session.Id}");
+                var authInformation = _tokenService.GenerateJWTToken(user: new UserAuthInformation(
+                    id: session.Id,
+                    login: session.User.Login,
+                    name: session.User.Name
+                    ));
 
-        //        if (!saveToken.IsValid)
-        //        {
-        //            return new Result<Auth>().AddError(MessagesHelper.GetMessage("AnUnexpectedErrorMsg"));
-        //        }
 
-        //        var auth = new Auth(newJwtToken, newRefreshToken);
+                session.UpdateSession(
+                    expireTime: DateTime.Now.AddSeconds(authInformation.expires_in),
+                    newRefreshToken: authInformation.refresh_token,
+                    refreshTokenExpireTime: DateTime.Now.AddSeconds(authInformation.expires_in)
+                    );
 
-        //        return new Result<Auth>(auth);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "An unexpected error occurred during the renew of refresh token");
-        //        return new Result<Auth>().SetAsInternalServerError().AddError(MessagesHelper.GetMessage("AnUnexpectedErrorMsg"));
-        //    }
-        //}
+                if (!session.IsValid)
+                {
+                    _logger.LogInformation($"Renovação sessão do usuario {userName} falhou {session.Notifications.CreateLogMsg()}");
+                    return Result.Failed(session.Notifications.CreateLogMsg());
+                }
+
+                await _sessionRepository.UpdateAsync(session);
+
+                return Result.Success(authInformation);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred during the session renew");
+                return Result.Failed("Ocorreu um erro inesperado ao tentar renovar a sessão");
+            }
+        }
 
 
 

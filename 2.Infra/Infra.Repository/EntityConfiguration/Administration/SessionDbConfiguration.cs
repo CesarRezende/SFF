@@ -16,6 +16,8 @@ namespace SFF.Infra.Repository.EntityConfiguration.Administration
             builder.Property(x => x.data_expiracao_refresh_token).HasColumnName("data_expiracao_refresh_token").IsRequired();
             builder.Property(x => x.hora_criacao).HasColumnName("hora_criacao").IsRequired();
             builder.Property(x => x.hora_atualizacao).HasColumnName("hora_atualizacao");
+            builder.Property(x => x.usuario_id).HasColumnName("usuario_id").IsRequired();
+
         }
     }
 }
