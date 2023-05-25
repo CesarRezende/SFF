@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SFF.Domain.Administration.Application.Queriables;
+using SFF.Domain.Administration.Core.Aggregates.SessionAggegate;
 using SFF.Domain.Administration.Core.Aggregates.UserAggregate;
 using SFF.Domain.Administration.Core.Repositories;
 using SFF.Infra.Core.CQRS.Implementation;
@@ -15,8 +16,8 @@ namespace SFF.Domain.Administration.Application.AppServices
     public class AdministrationAppService : BaseAppService, IAdministrationAppService
     {
 
-        private readonly IEventDispatcher _dispatcher;
         private readonly IUserRepository _userRepository;
+        private readonly ISessionRepository _sessionRepository;
         private readonly ITokenService _tokenService;
         private IConfiguration _configuration;
         private readonly ILogger<AdministrationAppService> _logger;
@@ -26,8 +27,8 @@ namespace SFF.Domain.Administration.Application.AppServices
         public AdministrationAppService(
             IAdministrationQueryable queryable,
             IUserRepository userRepository,
+            ISessionRepository sessionRepository,
             ITokenService tokenService,
-            IEventDispatcher dispatcher,
             ILogger<AdministrationAppService> logger,
             IConfiguration configuration)
         {
@@ -35,7 +36,7 @@ namespace SFF.Domain.Administration.Application.AppServices
             Query = queryable != null ? queryable : throw new ArgumentNullException("queryable");
             _userRepository = userRepository != null ? userRepository : throw new ArgumentNullException("userRepository");
             _tokenService = tokenService != null ? tokenService : throw new ArgumentNullException("tokenService");
-            _dispatcher = dispatcher != null ? dispatcher : throw new ArgumentNullException("dispatcher");
+            _sessionRepository = sessionRepository != null ? sessionRepository : throw new ArgumentNullException("sessionRepository");
             _logger = logger != null ? logger : throw new ArgumentNullException("logger");
             _configuration = configuration != null ? configuration : throw new ArgumentNullException("configuration");
         }
@@ -181,7 +182,7 @@ namespace SFF.Domain.Administration.Application.AppServices
 
 
 
-        public async Task<CommandResult> Authenticate(string login, string password)
+        public async Task<CommandResult> Authenticate(string ip, string login, string password)
         {
             try
             {
@@ -212,6 +213,16 @@ namespace SFF.Domain.Administration.Application.AppServices
                     id: user.Id,
                     login: user.Login
                     ));
+
+
+                var newSession = Session.CreateSession(
+                    ip: ip,
+                    expireTime: DateTime.Now.AddSeconds(authInformation.expires_in),
+                    refreshToken: authInformation.refresh_token,
+                    refreshTokenExpireTime: DateTime.Now.AddSeconds(authInformation.expires_in)
+                    );
+
+                await _sessionRepository.InsertAsync(newSession);
 
                 return Result.Success(authInformation);
             }

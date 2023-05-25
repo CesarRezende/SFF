@@ -31,7 +31,7 @@ namespace SFF.Domain.Administration.Application.Handlers.Commands
         {
             return await _unitOfWork.RunAsync<CommandResult>(async () => {
 
-                return await _administrationAppService.Authenticate(command.Login, command.Password);
+                return await _administrationAppService.Authenticate(command.Ip, command.Login, command.Password);
 
             });
             

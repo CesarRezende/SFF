@@ -10,9 +10,9 @@
             )
         {
             access_token = accessToken;
-            expires_in = expiresIn.ToString();
+            expires_in = expiresIn;
             refresh_token = refresToken;
-            refresh_expires_in = refresTokenExpiresIn.ToString();
+            refresh_token_expires_in = refresTokenExpiresIn;
         }
 
         public static AuthInformation CreateAuthInformation(
@@ -32,9 +32,9 @@
 
         public string token_type { get; private set; } = "Bearer";
         public string access_token { get; private set; }
-        public string expires_in { get; private set; }
+        public int expires_in { get; private set; }
         public string refresh_token { get; private set; }
-        public string refresh_expires_in { get; private set; }
+        public int refresh_token_expires_in { get; private set; }
 
     }
 }

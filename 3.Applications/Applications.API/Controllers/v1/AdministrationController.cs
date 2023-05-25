@@ -42,6 +42,8 @@ namespace SFF.Applications.API.Controllers.v1
         [Route("auth/authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] AuthenticateCommand command)
         {
+            command.Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+
             return Response(await CommandDispatcher.Dispatch(command));
         }
     }

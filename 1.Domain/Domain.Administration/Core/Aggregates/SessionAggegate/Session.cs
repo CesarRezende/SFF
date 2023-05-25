@@ -4,7 +4,7 @@ using SFF.Domain.SharedKernel.Base;
 
 namespace SFF.Domain.Administration.Core.Aggregates.SessionAggegate
 {
-    public class Session : AggregateRoot<Guid>
+    public class Session : AggregateRoot<long>
     {
 
         public IPAddress IPAddress { get; private set; }
@@ -14,28 +14,32 @@ namespace SFF.Domain.Administration.Core.Aggregates.SessionAggegate
         public bool IsExpired { get { return ExpireTime < DateTime.Now; } }
 
         public Session(
-            Guid id,
+            long id,
+            IPAddress ipAddress,
             DateTime expireTime,
             RefreshToken refreshToken,
             DateTime createdTime,
             DateTime? updatedTime)
             : base(id, createdTime, updatedTime)
         {
+            IPAddress = ipAddress;
             ExpireTime = expireTime;
             RefreshToken = refreshToken;
         }
 
 
         public static Session CreateSession(
-            Guid id,
+            string ip,
             DateTime expireTime,
             string refreshToken,
             DateTime refreshTokenExpireTime)
         {
 
             var newToken =  RefreshToken.CreateRefreshToken(refreshToken, refreshTokenExpireTime);
+            var ipAddress =  IPAddress.CreateIPAddress(ip);
             var newSession = new Session(
-                id:id, 
+                id: 0, 
+                ipAddress: ipAddress,
                 expireTime:expireTime,
                 refreshToken:newToken,
                 createdTime:DateTime.Now,

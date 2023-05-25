@@ -39,7 +39,7 @@ namespace SFF.Domain.Administration.Application
 
         #region Auth
         Task<CommandResult> GeneratePasswordAsync(string plainPassword);
-        Task<CommandResult> Authenticate(string login, string password);
+        Task<CommandResult> Authenticate(string ip, string login, string password);
         //Task<CommandResult> RefreshToken(string token, string refreshToken);
 
         #endregion

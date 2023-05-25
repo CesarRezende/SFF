@@ -2,11 +2,14 @@
 using SFF.Infra.Core.CQRS.Implementation;
 using SFF.Infra.Core.Validations.Interface;
 using SFF.Infra.Core.Validations.Models;
+using System.Text.Json.Serialization;
 
 namespace SFF.Domain.Administration.Application.Commands
 {
     public class AuthenticateCommand : CommandBase
     {
+        [JsonIgnore]
+        public string? Ip { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
     }
@@ -18,6 +21,8 @@ namespace SFF.Domain.Administration.Application.Commands
         {
             var result = new ValidationResult();
             result.AddNotifications(new Contract<AuthenticateCommand>().Requires()
+                .IsNotNullOrEmpty(instance.Ip, "AuthenticateCommand.Ip", "Ip é obrigatório")
+
                 .IsNotNullOrEmpty(instance.Login, "AuthenticateCommand.Login", "Login é obrigatório")
                 .IsGreaterOrEqualsThan(instance.Login.Length, 3, "AuthenticateCommand.Login", "Login deve conter ao menos 3 caracteres")
 

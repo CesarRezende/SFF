@@ -1,4 +1,6 @@
-﻿using SFF.Domain.SharedKernel;
+﻿using Flunt.Notifications;
+using Flunt.Validations;
+using SFF.Domain.SharedKernel;
 
 namespace SFF.Domain.Administration.Core.Aggregates.SessionAggegate
 {
@@ -11,6 +13,7 @@ namespace SFF.Domain.Administration.Core.Aggregates.SessionAggegate
             IP = ip;
         }
 
+
         protected override bool EqualsCore(IPAddress other)
         {
             return IP == other.IP;
@@ -19,6 +22,19 @@ namespace SFF.Domain.Administration.Core.Aggregates.SessionAggegate
         protected override int GetHashCodeCore()
         {
             return IP.GetHashCode();
+        }
+
+
+        public static IPAddress CreateIPAddress(string ip)
+        {
+
+            var newToken = new IPAddress(ip);
+            newToken.AddNotifications(new Contract<Notification>()
+               .Requires()
+               .IsNotNullOrEmpty(ip, "IPAddress.IP", "IP é obrigatório")
+               );
+
+            return newToken;
         }
     }
 }
