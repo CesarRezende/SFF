@@ -1,6 +1,7 @@
 ﻿using SFF.Domain.Administration.Application.Queriables;
 using SFF.Domain.SharedKernel.Base;
 using SFF.Infra.Core.CQRS.Interfaces;
+using SFF.Infra.Core.Security.Models;
 
 namespace SFF.Domain.Administration.Application
 {
@@ -41,6 +42,7 @@ namespace SFF.Domain.Administration.Application
         Task<CommandResult> GeneratePasswordAsync(string plainPassword);
         Task<CommandResult> Authenticate(string ip, string login, string password);
         Task<CommandResult> RefreshToken(string refreshToken);
+        Task<CommandResult> CreateSession(string ip, long userId, AuthInformation authInformation);
 
         #endregion
 

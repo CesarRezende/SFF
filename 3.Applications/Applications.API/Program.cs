@@ -1,9 +1,9 @@
 using DryIoc.Microsoft.DependencyInjection;
-using SFF.Infra.IoC;
-using Serilog;
-using SFF.Infra.Web.Startup;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using SFF.Infra.IoC;
+using SFF.Infra.Web.Startup;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);

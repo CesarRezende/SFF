@@ -1,7 +1,9 @@
 ﻿using Flunt.Notifications;
 using Flunt.Validations;
+using SFF.Domain.Administration.Application.Events;
 using SFF.Domain.SharedKernel.Base;
 using SFF.Infra.Core.CQRS.Models;
+using SFF.Infra.Core.Security.Models;
 
 namespace SFF.Domain.Administration.Core.Aggregates.UserAggregate
 {
@@ -96,7 +98,7 @@ namespace SFF.Domain.Administration.Core.Aggregates.UserAggregate
                 LoginFailTimes = 0;
                 BlockedUntil = null;
             }
-            else 
+            else
             {
                 LoginFailTimes += 1;
 
@@ -114,5 +116,15 @@ namespace SFF.Domain.Administration.Core.Aggregates.UserAggregate
             return result;
         }
 
+        public Result CreateSession(string ip, long userId, AuthInformation authInformation)
+        {
+
+            var result = new Result();
+
+
+            AddEvent(new UserAuthenticatedEvent(ip, userId, authInformation));
+
+            return result;
+        }
     }
 }

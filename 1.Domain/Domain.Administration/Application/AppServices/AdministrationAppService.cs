@@ -50,7 +50,7 @@ namespace SFF.Domain.Administration.Application.AppServices
         #region AdministrationAppService
 
         #region User
-        
+
 
         #endregion User
 
@@ -85,7 +85,8 @@ namespace SFF.Domain.Administration.Application.AppServices
                 _logger.LogInformation($"Looking for user {login}");
                 var user = await _userRepository.GetByLoginAsync(login);
 
-                if (user == null) { 
+                if (user == null)
+                {
                     _logger.LogError($"User {login} not found!");
                     return Result.Failed($"Usuario {login} não foi encontrado!");
                 }
@@ -98,7 +99,8 @@ namespace SFF.Domain.Administration.Application.AppServices
                 _logger.LogInformation($"Atualiza usuario {login}");
                 await _userRepository.UpdateAsync(user);
 
-                if (!isValidCredentials.IsValid) {
+                if (!isValidCredentials.IsValid)
+                {
                     _logger.LogInformation($"Autenticação do usuario {login} falhou {isValidCredentials.Notifications.CreateLogMsg()}");
                     return Result.Failed(isValidCredentials.Notifications.CreateLogMsg());
                 }
@@ -112,9 +114,48 @@ namespace SFF.Domain.Administration.Application.AppServices
                     ));
 
 
+                user.CreateSession(ip, user.Id, authInformation);
+
+                if (user.IsValid)
+                    await DispatchEvents(user.DomainEvents);
+
+                //var newSession = Session.CreateSession(
+                //    ip: ip,
+                //    userId: user.Id,
+                //    expireTime: DateTime.Now.AddSeconds(authInformation.expires_in),
+                //    refreshToken: authInformation.refresh_token,
+                //    refreshTokenExpireTime: DateTime.Now.AddSeconds(authInformation.expires_in)
+                //    );
+
+
+                //if (!newSession.IsValid)
+                //{
+                //    _logger.LogInformation($"Autenticação do usuario {login} falhou {newSession.Notifications.CreateLogMsg()}");
+                //    return Result.Failed(newSession.Notifications.CreateLogMsg());
+                //}
+
+                //await _sessionRepository.InsertAsync(newSession);
+
+                return Result.Success(authInformation);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred during the login");
+                return Result.Failed("Ocorreu um erro inesperado ao tentar efetuar o login");
+            }
+        }
+
+
+
+        public async Task<CommandResult> CreateSession(string ip, long userId, AuthInformation authInformation)
+        {
+            try
+            {
+                _logger.LogInformation($"Criando sessão para o usuário {userId}");
+
                 var newSession = Session.CreateSession(
                     ip: ip,
-                    userId: user.Id,
+                    userId: userId,
                     expireTime: DateTime.Now.AddSeconds(authInformation.expires_in),
                     refreshToken: authInformation.refresh_token,
                     refreshTokenExpireTime: DateTime.Now.AddSeconds(authInformation.expires_in)
@@ -123,7 +164,7 @@ namespace SFF.Domain.Administration.Application.AppServices
 
                 if (!newSession.IsValid)
                 {
-                    _logger.LogInformation($"Autenticação do usuario {login} falhou {newSession.Notifications.CreateLogMsg()}");
+                    _logger.LogInformation($"Sessão criada para o usuario {userId} invalida {newSession.Notifications.CreateLogMsg()}");
                     return Result.Failed(newSession.Notifications.CreateLogMsg());
                 }
 
@@ -133,8 +174,8 @@ namespace SFF.Domain.Administration.Application.AppServices
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unexpected error occurred during the login");
-                return Result.Failed("Ocorreu um erro inesperado ao tentar efetuar o login");
+                _logger.LogError(ex, $"An unexpected error occurred while trying to create session for user {userId}");
+                return Result.Failed($"Ocorreu um erro inesperado ao tentar criar sessão para o usuário {userId}");
             }
         }
 
@@ -155,7 +196,7 @@ namespace SFF.Domain.Administration.Application.AppServices
 
                 var validationResult = session.ValidateSession();
 
-                if(!validationResult.IsValid)
+                if (!validationResult.IsValid)
                     return Result.Failed(validationResult.Notifications.CreateLogMsg());
 
                 _logger.LogInformation($"Generating JWT for session {session.Id}");
